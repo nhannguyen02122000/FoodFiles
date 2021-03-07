@@ -92,14 +92,12 @@ export const AuthProvider = ({ children }) => {
               user: user_data
             }
           })
-          console.log("set user")
           redux_dispatch(setUser({
             id: user.uid,
             email: user.email,
             name: user.fullname || user.email,
             role: doc.data().role
           }))
-          console.log("finish set user")
         }
       }
       else {

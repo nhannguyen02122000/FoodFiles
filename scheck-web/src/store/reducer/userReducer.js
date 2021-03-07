@@ -6,7 +6,6 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.SET_USER: {
-      console.log("action", action)
       return {
         ...state,
         user: { ...action.payload.user }
@@ -21,7 +20,6 @@ const userReducer = (state = initialState, action) => {
 export default userReducer
 
 export const setUser = user_data => {
-  console.log(user_data)
   return dispatch => {
     dispatch({
       type: actionType.SET_USER,

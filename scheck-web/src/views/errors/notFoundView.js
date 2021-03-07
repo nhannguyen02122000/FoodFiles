@@ -10,7 +10,6 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from "../../components/page"
-import useAuth from "../../hooks/useAuth"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,8 +33,6 @@ const NotFoundView = () => {
   const classes = useStyles();
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('sm'));
-  const { logout } = useAuth()
-
   return (
     <Page
       className={classes.root}
@@ -69,11 +66,6 @@ const NotFoundView = () => {
             variant="outlined"
           >
             Back to home
-          </Button>
-          <Button
-            onClick={() => logout()}
-          >
-            log out
           </Button>
         </Box>
       </Container>
