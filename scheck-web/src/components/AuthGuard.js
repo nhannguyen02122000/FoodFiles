@@ -6,7 +6,7 @@ const AuthGuard = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
 
   if (!isAuthenticated) {
-    return <Redirect to="/login" />;
+    return <Redirect to="/auth" />;
   }
 
   return (

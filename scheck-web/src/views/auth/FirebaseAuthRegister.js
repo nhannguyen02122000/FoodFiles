@@ -5,38 +5,25 @@ import { Formik } from 'formik';
 import {
   Box,
   Button,
+  Checkbox,
   Divider,
   FormHelperText,
+  Link,
   TextField,
   Typography,
-  makeStyles,
-  withStyles
+  makeStyles
 } from '@material-ui/core';
-import useIsMountedRef from '../../../hooks/useIsMountedRef';
-import AuthContext from '../../../contexts/FirebaseAuthContext'
+import useIsMountedRef from '../../hooks/useIsMountedRef';
+import AuthContext from '../../contexts/FirebaseAuthContext'
 
-const CustomTextField = withStyles((theme) => ({
-  root: {
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderRadius: "30px",
-      },
-    },
-  },
-}))(TextField);
 const useStyles = makeStyles((theme) => ({
   root: {},
+  inputText: {
+    borderRadius: "30px"
+  },
   googleButton: {
     borderRadius: "30px",
     backgroundColor: "white"
-  },
-  submitButton: {
-    borderRadius: "30px",
-    background: 'linear-gradient(225deg, #1E90FF 30%, darkblue 90%)',
-    color: "white"
-  },
-  inputText: {
-    borderRadius: "30px"
   },
   providerIcon: {
     marginRight: theme.spacing(2)
@@ -45,13 +32,18 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   dividerText: {
-    margin: theme.spacing(2)
-  }
+    margin: theme.spacing(1)
+  },
+  submitButton: {
+    borderRadius: "30px",
+    background: 'linear-gradient(225deg, #2a9df4 30%, #03254c 90%)',
+    color: "white"
+  },
 }));
 
-const FirebaseAuthLogin = ({ className, ...rest }) => {
+const FirebaseAuthRegister = ({ className, ...rest }) => {
   const classes = useStyles();
-  const { signInWithEmailAndPassword, signInWithGoogle } = useContext(AuthContext);
+  const { createUserWithEmailAndPassword, signInWithGoogle } = useContext(AuthContext);
   const isMountedRef = useIsMountedRef();
 
   const handleGoogleClick = async () => {
@@ -69,15 +61,19 @@ const FirebaseAuthLogin = ({ className, ...rest }) => {
         initialValues={{
           email: '',
           password: '',
+          fullname: '',
+          policy: true,
           submit: null
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
+          password: Yup.string().min(7).max(255).required('Password is required'),
+          fullname: Yup.string().min(1).max(255).required('Full name is required'),
+          policy: Yup.boolean().oneOf([true], 'This field must be checked')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await signInWithEmailAndPassword(values.email, values.password);
+            await createUserWithEmailAndPassword(values.email, values.password);
 
             if (isMountedRef.current) {
               setStatus({ success: true });
@@ -97,10 +93,24 @@ const FirebaseAuthLogin = ({ className, ...rest }) => {
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form
             noValidate
-            onSubmit={handleSubmit}
             className={clsx(classes.root, className)}
+            onSubmit={handleSubmit}
             {...rest}
           >
+            <TextField
+              error={Boolean(touched.fullname && errors.fullname)}
+              fullWidth
+              helperText={touched.fullname && errors.fullname}
+              label="Full name"
+              margin="normal"
+              name="fullname"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="text"
+              value={values.fullname}
+              variant="outlined"
+              InputProps={{ className: classes.inputText }}
+            />
             <TextField
               error={Boolean(touched.email && errors.email)}
               fullWidth
@@ -129,6 +139,36 @@ const FirebaseAuthLogin = ({ className, ...rest }) => {
               variant="outlined"
               InputProps={{ className: classes.inputText }}
             />
+            <Box
+              alignItems="center"
+              display="flex"
+            >
+              <Checkbox
+                checked={values.policy}
+                name="policy"
+                onChange={handleChange}
+                color="#03254c"
+              />
+              <Typography
+                variant="body2"
+                color="textSecondary"
+              >
+                I have read the
+                {' '}
+                <Link
+                  component="a"
+                  href="#"
+                  color="#03254c"
+                >
+                  Terms and Conditions
+                </Link>
+              </Typography>
+            </Box>
+            {Boolean(touched.policy && errors.policy) && (
+              <FormHelperText error>
+                {errors.policy}
+              </FormHelperText>
+            )}
             {errors.submit && (
               <Box mt={3}>
                 <FormHelperText error>
@@ -145,7 +185,7 @@ const FirebaseAuthLogin = ({ className, ...rest }) => {
                 type="submit"
                 variant="contained"
               >
-                Log In
+                Register
               </Button>
             </Box>
           </form>
@@ -184,10 +224,10 @@ const FirebaseAuthLogin = ({ className, ...rest }) => {
           className={classes.providerIcon}
           src="/Image/google.svg"
         />
-        Sign in with Google
+        Register with Google
       </Button>
     </>
   );
 };
 
-export default FirebaseAuthLogin;
+export default FirebaseAuthRegister;
