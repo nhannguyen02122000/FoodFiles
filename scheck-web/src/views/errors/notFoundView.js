@@ -10,7 +10,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from "../../components/page"
-
+import useAuth from "../../hooks/useAuth"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +34,7 @@ const NotFoundView = () => {
   const classes = useStyles();
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down('sm'));
+  const { logout } = useAuth()
 
   return (
     <Page
@@ -44,7 +45,7 @@ const NotFoundView = () => {
         <Typography
           align="center"
           variant={mobileDevice ? 'h4' : 'h4'}
-          color="textPrimary" fgs
+          color="textPrimary"
         >
           404: The page you are looking for isn’t here
         </Typography>
@@ -68,6 +69,11 @@ const NotFoundView = () => {
             variant="outlined"
           >
             Back to home
+          </Button>
+          <Button
+            onClick={() => logout()}
+          >
+            log out
           </Button>
         </Box>
       </Container>

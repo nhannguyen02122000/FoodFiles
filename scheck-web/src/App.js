@@ -3,6 +3,7 @@ import ScrollReset from './components/ScrollReset'
 import routes, { renderRoutes } from "./routes"
 import { Router, BrowserRouter } from 'react-router-dom'
 import history from "./history"
+import { AuthProvider } from "./contexts/FirebaseAuthContext"
 
 const App = () => {
   return (
@@ -11,10 +12,12 @@ const App = () => {
       maxSnack={3}
     >
       <Router history={history}>
-        <BrowserRouter>
-          <ScrollReset />
-          {renderRoutes(routes)}
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter>
+            <ScrollReset />
+            {renderRoutes(routes)}
+          </BrowserRouter>
+        </AuthProvider>
       </Router>
     </SnackbarProvider>
   )

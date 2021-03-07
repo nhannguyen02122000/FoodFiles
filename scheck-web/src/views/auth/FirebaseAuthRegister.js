@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -14,7 +14,9 @@ import {
   makeStyles
 } from '@material-ui/core';
 import useIsMountedRef from '../../hooks/useIsMountedRef';
-import AuthContext from '../../contexts/FirebaseAuthContext'
+import useAuth from '../../hooks/useAuth';
+import { userRef } from '../../store/query';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -43,12 +45,24 @@ const useStyles = makeStyles((theme) => ({
 
 const FirebaseAuthRegister = ({ className, ...rest }) => {
   const classes = useStyles();
-  const { createUserWithEmailAndPassword, signInWithGoogle } = useContext(AuthContext);
+  const { createUserWithEmailAndPassword, signInWithGoogle, logout } = useAuth()
   const isMountedRef = useIsMountedRef();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleGoogleClick = async () => {
     try {
-      await signInWithGoogle();
+      const userCredential = await signInWithGoogle();
+      if (!userCredential.additionalUserInfo.isNewUser) {
+        enqueueSnackbar("user account is exists", { variant: 'warning' })
+        await logout()
+        return
+      }
+      await userRef.doc(userCredential.user.uid).set({
+        id: userCredential.user.uid,
+        email: userCredential.user.email,
+        fullname: userCredential.user.displayName,
+        role: "user"
+      })
     }
     catch (err) {
       console.error(err);
@@ -73,8 +87,18 @@ const FirebaseAuthRegister = ({ className, ...rest }) => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await createUserWithEmailAndPassword(values.email, values.password);
-
+            try {
+              const userCredential = await createUserWithEmailAndPassword(values.email, values.password);
+              await userRef.doc(userCredential.user.uid).set({
+                id: userCredential.user.uid,
+                email: values.email,
+                fullname: values.fullname,
+                role: "user"
+              })
+            }
+            catch (err) {
+              enqueueSnackbar(err.message, { variant: 'warning' })
+            }
             if (isMountedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);

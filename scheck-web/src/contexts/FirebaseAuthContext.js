@@ -6,7 +6,8 @@ import React, {
 import SplashScreen from "../components/SplashScreen"
 import firebase from "../db/firebase"
 import { useDispatch } from "../store";
-import { companyRef } from "../store/query";
+import { userRef } from "../store/query";
+import { setUser } from "../store/reducer/userReducer"
 
 const initialAuthState = {
   isAuthenticated: false,
@@ -66,9 +67,13 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        // Here you should extract the complete user profile to make it available in your entire app.
-        // The auth state only provides basic information.
-        const doc = await companyRef.collection('employees').doc(user.uid).get();
+        let doc = null
+        try {
+          doc = await userRef.doc(user.uid).get()
+        }
+        catch (err) {
+          return
+        }
         if (!doc.exists) {
           console.log('Permission error');
           await logout();
@@ -77,7 +82,7 @@ export const AuthProvider = ({ children }) => {
           const user_data = {
             id: user.uid,
             email: user.email,
-            name: user.displayName || user.email,
+            name: user.fullname || user.email,
             token: await user.getIdToken(true),
           }
           dispatch({
@@ -86,8 +91,15 @@ export const AuthProvider = ({ children }) => {
               isAuthenticated: true,
               user: user_data
             }
-          });
-
+          })
+          console.log("set user")
+          redux_dispatch(setUser({
+            id: user.uid,
+            email: user.email,
+            name: user.fullname || user.email,
+            role: doc.data().role
+          }))
+          console.log("finish set user")
         }
       }
       else {
