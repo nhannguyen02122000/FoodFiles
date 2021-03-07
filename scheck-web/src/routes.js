@@ -62,7 +62,12 @@ const routes = [
       {
         exact: true,
         path: '/',
-        component: lazy(() => import('./views/home/index'))
+        component: () => <Redirect to="/ingredients" />
+      },
+      {
+        exact: true,
+        path: '/ingredients',
+        component: lazy(() => import("./views/ingredients/ingredientsListView/index"))
       },
       {
         component: () => <Redirect to="/404" />
