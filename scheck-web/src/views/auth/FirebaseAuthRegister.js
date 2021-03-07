@@ -147,7 +147,7 @@ const FirebaseAuthRegister = ({ className, ...rest }) => {
                 checked={values.policy}
                 name="policy"
                 onChange={handleChange}
-                color="#03254c"
+                color="primary"
               />
               <Typography
                 variant="body2"
@@ -158,7 +158,7 @@ const FirebaseAuthRegister = ({ className, ...rest }) => {
                 <Link
                   component="a"
                   href="#"
-                  color="#03254c"
+                  color="primary"
                 >
                   Terms and Conditions
                 </Link>

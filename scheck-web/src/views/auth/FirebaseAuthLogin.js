@@ -10,20 +10,10 @@ import {
   TextField,
   Typography,
   makeStyles,
-  withStyles
 } from '@material-ui/core';
 import useIsMountedRef from '../../hooks/useIsMountedRef';
 import AuthContext from '../../contexts/FirebaseAuthContext'
 
-const CustomTextField = withStyles((theme) => ({
-  root: {
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderRadius: "30px",
-      },
-    },
-  },
-}))(TextField);
 const useStyles = makeStyles((theme) => ({
   root: {},
   googleButton: {

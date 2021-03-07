@@ -1,11 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import {
-  Box,
   Container,
-  Divider,
   Grid,
-  Link,
   makeStyles
 } from '@material-ui/core';
 import {
@@ -13,15 +9,8 @@ import {
   ToggleButtonGroup,
 } from '@material-ui/lab';
 import Page from "../../components/page"
-// import Logo from 'src/components/Logo';
-import AuthContext from '../../contexts/FirebaseAuthContext'
 import FirebaseAuthLogin from './FirebaseAuthLogin'
 import FirebaseAuthRegister from './FirebaseAuthRegister'
-
-
-const methodIcons = {
-  'FirebaseAuth': '/Image/firebase.svg',
-};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,12 +68,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginView = () => {
-  const classes = useStyles();
-  const { method } = useContext(AuthContext);
-  const [status, setStatus] = React.useState('login');
+  const classes = useStyles()
+  const [status, setStatus] = useState('login')
 
   const handleChoose = (event, newStatus) => {
-    console.log(newStatus)
     if (!newStatus) return
     setStatus(newStatus);
   };

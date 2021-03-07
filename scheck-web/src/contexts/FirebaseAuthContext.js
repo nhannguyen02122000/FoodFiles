@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const createUserWithEmailAndPassword = async (email, password) => {
+    console.log(email, password)
     return firebase.auth().createUserWithEmailAndPassword(email, password);
   };
 
