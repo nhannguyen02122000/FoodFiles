@@ -1,20 +1,20 @@
 import React from 'react';
 import {
   Box,
-  LinearProgress,
+  CircularProgress,
   makeStyles
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     alignItems: 'center',
-    backgroundColor: theme.palette.background.default,
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
     justifyContent: 'center',
     minHeight: '100%',
-    padding: theme.spacing(3)
+    margin: "auto",
+    padding: 100
   }
 }));
 
@@ -22,9 +22,9 @@ const LoadingScreen = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Box width={400}>
-        <LinearProgress />
+    <div >
+      <Box width={700} className={classes.root}>
+        <CircularProgress size={150} />
       </Box>
     </div>
   );

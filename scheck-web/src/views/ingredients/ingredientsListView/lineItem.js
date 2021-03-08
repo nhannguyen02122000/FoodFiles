@@ -45,33 +45,33 @@ const LineItem = ({ ingredient, index, ...rest }) => {
           onClick={handleClick}
         >
           <MoreHorizIcon />
-          <Popover
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}
-          >
-            <Button
-              fullWidth
-              onClick={handleModify}
-            >
-              Modify
-            </Button>
-            <Button
-              fullWidth
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
-          </Popover>
         </IconButton>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Button
+            fullWidth
+            onClick={handleModify}
+          >
+            Modify
+            </Button>
+          <Button
+            fullWidth
+            onClick={handleDelete}
+          >
+            Delete
+            </Button>
+        </Popover>
       </TableCell>
     </TableRow>
   )

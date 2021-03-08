@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useReducer
 } from 'react';
-import SplashScreen from "../components/SplashScreen"
+import LoadingScreen from "../components/LoadingScreen"
 import firebase from "../db/firebase"
 import { useDispatch } from "../store";
 import { userRef } from "../store/query";
@@ -114,7 +114,7 @@ export const AuthProvider = ({ children }) => {
   }, [dispatch, redux_dispatch]);
 
   if (!state.isInitialised) {
-    return <SplashScreen />;
+    return <LoadingScreen />;
   }
 
   return (
