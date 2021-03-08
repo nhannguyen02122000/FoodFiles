@@ -78,7 +78,7 @@ const LoginView = () => {
   return (
     <Page
       className={classes.root}
-      title="login"
+      title="Auth"
     >
       <Container
         maxWidth="md"

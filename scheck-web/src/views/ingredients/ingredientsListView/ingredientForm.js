@@ -28,10 +28,10 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
   const classes = useStyles()
   const { enqueueSnackbar } = useSnackbar()
   const [ingredient, setIngredient] = useState({
-    name: '' || (curIngredient && curIngredient.name),
-    description: '' || (curIngredient && curIngredient.description),
-    role: '' || (curIngredient && curIngredient.role),
-    toxicityLevel: '' || (curIngredient && curIngredient.toxicityLevel)
+    name: curIngredient ? curIngredient.name : '',
+    description: curIngredient ? curIngredient.description : '',
+    role: curIngredient ? curIngredient.role : '',
+    toxicityLevel: curIngredient ? curIngredient.toxicityLevel : ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const handleChange = (fieldName, value) => {
@@ -54,8 +54,8 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
       return
     }
     setIsSubmitting(true)
-    let insId = curIngredient.id
-    let order = curIngredient.order
+    let insId = (curIngredient && curIngredient.id) || null
+    let order = (curIngredient && curIngredient.order) || null
     if (!insId) {
       const insRef = ingredientRef.doc()
       insId = insRef.id
