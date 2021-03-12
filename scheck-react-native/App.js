@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Block, GalioProvider } from 'galio-framework';
 import { Provider } from 'react-redux';
 import { store } from "./src/store/store"
+import AppView from "./src/views/navigation/index"
 
 export default App = () => {
   return (
@@ -13,9 +14,7 @@ export default App = () => {
         <GalioProvider>
           <Block flex>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <View style={styles.container}>
-              <Text>Open up App.js to start working on your app!</Text>
-            </View>
+            <AppView />
           </Block>
         </GalioProvider>
       </NavigationContainer>

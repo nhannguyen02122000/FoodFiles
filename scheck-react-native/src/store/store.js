@@ -1,6 +1,10 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import rootReducer from './reducer/tempReducer';
+import rootReducer from './rootReducer'
+import {
+  useDispatch as useReduxDispatch,
+  useSelector as useReduxSelector
+} from 'react-redux';
 
 const enhancers = [
   applyMiddleware(
@@ -17,3 +21,6 @@ const composeEnhancers =
 const enhancer = composeEnhancers(...enhancers);
 
 export const store = createStore(rootReducer, {}, enhancer);
+export const useSelector = useReduxSelector;
+
+export const useDispatch = () => useReduxDispatch();
