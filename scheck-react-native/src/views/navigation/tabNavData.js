@@ -2,9 +2,9 @@ import React from 'react'
 import Home from '../home/index';
 import * as language from '../../constants/language'
 const iconHome = require('../../../assets/tabbar/home.png');
-const iconHistory = require('../../../assets/tabbar/history.png');
-const iconArticle = require('../../../assets/tabbar/article.png');
-const iconMore = require('../../../assets/tabbar/more.png');
+const iconExplore = require('../../../assets/tabbar/explore.png');
+const iconTracking = require('../../../assets/tabbar/tracking.png');
+const iconList = require('../../../assets/tabbar/list.png');
 
 const tabNavigationData = [
   {
@@ -13,19 +13,20 @@ const tabNavigationData = [
     icon: iconHome,
   },
   {
-    name: language.BOTTOM_NAV_BAR_HISTORY,
+    name: language.BOTTOM_NAV_BAR_EXPLORE,
     component: Home,
-    icon: iconHistory
+    icon: iconExplore
+
   },
   {
-    name: language.BOTTOM_NAV_BAR_ARTICLE,
+    name: language.BOTTOM_NAV_BAR_TRACKING,
     component: Home,
-    icon: iconArticle
+    icon: iconTracking
   },
   {
-    name: language.BOTTOM_NAV_BAR_MORE,
+    name: language.BOTTOM_NAV_BAR_LIST,
     component: Home,
-    icon: iconMore
+    icon: iconList
   },
 ];
 

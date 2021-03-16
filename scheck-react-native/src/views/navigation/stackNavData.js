@@ -7,6 +7,11 @@ const StackNavigationData = [
   {
     name: 'SCheck',
     component: TabNavigation,
+    headerLeft: null,
+    headerTitleStyle: {
+      color: 'red',
+      fontSize: 18,
+    },
   },
 ]
 
