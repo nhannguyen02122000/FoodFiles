@@ -30,6 +30,14 @@ const LineItem = ({ ingredient, index, ...rest }) => {
       .finally(() => window.location.reload(false))
   }
   const [openForm, setOpenForm] = useState(false)
+  let foundIn = "["
+  if (ingredient.foundIn) {
+    for (let ele of ingredient.foundIn) {
+      foundIn += ele + ", "
+    }
+    foundIn = foundIn.substr(0, foundIn.length - 2)
+  }
+  foundIn += "]"
   return (
     <TableRow style={index % 2 ? { background: "#d0efff" } : { background: "white" }}>
       <TableCell></TableCell>
@@ -38,6 +46,8 @@ const LineItem = ({ ingredient, index, ...rest }) => {
       <TableCell >{ingredient.description}</TableCell>
       <TableCell>{ingredient.role}</TableCell>
       <TableCell >{ingredient.toxicityLevel}</TableCell>
+      <TableCell>{ingredient.ADI}</TableCell>
+      <TableCell>{foundIn}</TableCell>
       <TableCell>
         <IngredientForm open={openForm} setOpenForm={setOpenForm} curIngredient={ingredient} />
         <IconButton

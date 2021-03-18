@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     margin: "10px 0px"
   },
+  withoutBoxOutside: {
+    padding: "10px",
+    margin: "10px 0px"
+  },
   btnGr: {
     marginTop: "50px"
   }
@@ -31,7 +35,9 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
     name: curIngredient ? curIngredient.name : '',
     description: curIngredient ? curIngredient.description : '',
     role: curIngredient ? curIngredient.role : '',
-    toxicityLevel: curIngredient ? curIngredient.toxicityLevel : ''
+    toxicityLevel: curIngredient ? curIngredient.toxicityLevel : '',
+    ADI: curIngredient ? curIngredient.ADI : '',
+    foundIn: curIngredient ? curIngredient.foundIn : [],
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const handleChange = (fieldName, value) => {
@@ -39,6 +45,14 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
       ...ins,
       [fieldName]: value
     }))
+  }
+  const handleChangeFoundIn = (value, ind) => {
+    setIngredient(ins => {
+      ins.foundIn[ind] = value
+      return ({
+        ...ins
+      })
+    })
   }
   const handleSubmit = async () => {
     if (!ingredient.name) {
@@ -66,6 +80,7 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
         order = doc.data().autonumber
       })
     }
+
     ingredientRef.doc(insId).set({ ...ingredient, id: insId, order: order })
       .then()
       .catch(err => enqueueSnackbar(err, { variant: "warning" }))
@@ -73,7 +88,15 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
         window.location.reload(false)
       })
   }
-
+  const handleAdd = () => {
+    setIngredient(ins => ({
+      ...ins,
+      foundIn: [
+        ...ins.foundIn,
+        '...'
+      ]
+    }))
+  }
   return (
     <Dialog onClose={() => setOpenForm(false)} open={open} >
       <DialogTitle>{curIngredient ? "Modify current ingredient" : "Add new ingredient"}</DialogTitle>
@@ -109,6 +132,7 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
           <Grid item xs={12} className={classes.boxOutside}>
             <TextField
               fullWidth
+              style={{ margin: "20px" }}
               label="Toxicity level"
               value={ingredient.toxicityLevel}
               onChange={e => handleChange("toxicityLevel", e.target.value)}
@@ -142,6 +166,37 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
                 </Button>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={12} className={classes.boxOutside}>
+            <TextField
+              fullWidth
+              label="Acceptable Daily Intake"
+              value={ingredient.ADI}
+              onChange={e => handleChange("ADI", e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} className={classes.boxOutside}>
+            {ingredient.foundIn.map((ele, ind) =>
+
+              <TextField
+                className={classes.withoutBoxOutside}
+                key={ind}
+                fullWidth
+                label="Usually found in"
+                value={ele}
+                onChange={e => handleChangeFoundIn(e.target.value, ind)}
+              />
+
+            )}
+            <Button
+              startIcon={<AddCircleOutlineIcon />}
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleAdd}
+            >
+              Add found in
+            </Button>
           </Grid>
           <Grid item xs={12} >
             <Button

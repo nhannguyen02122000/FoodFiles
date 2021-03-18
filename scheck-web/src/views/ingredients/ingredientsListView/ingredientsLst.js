@@ -19,6 +19,8 @@ const IngredientsLst = ({ searchedInsLst, ...rest }) => {
           <TableCell>Description</TableCell>
           <TableCell>Role</TableCell>
           <TableCell>Toxicity level</TableCell>
+          <TableCell>ADI</TableCell>
+          <TableCell>Usually found in</TableCell>
           <TableCell></TableCell>
         </TableRow>
       </TableHead>
