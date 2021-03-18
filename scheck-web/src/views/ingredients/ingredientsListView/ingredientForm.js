@@ -39,6 +39,7 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
     ADI: curIngredient ? curIngredient.ADI : '',
     foundIn: curIngredient ? curIngredient.foundIn : [],
   })
+  const [image, setImage] = useState({ image: '', file: null })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const handleChange = (fieldName, value) => {
     setIngredient(ins => ({
@@ -80,8 +81,12 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
         order = doc.data().autonumber
       })
     }
-
-    ingredientRef.doc(insId).set({ ...ingredient, id: insId, order: order })
+    let storageRef = ""
+    if (image.file) {
+      storageRef = firebase.storage().ref().child(`images/${insId}.jpg`)
+      await storageRef.put(image.file)
+    }
+    ingredientRef.doc(insId).set({ ...ingredient, imageUrl: storageRef.fullPath, id: insId, order: order })
       .then()
       .catch(err => enqueueSnackbar(err, { variant: "warning" }))
       .finally(() => {
@@ -96,6 +101,25 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
         '...'
       ]
     }))
+  }
+  const handleImage = (e) => {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      setImage({
+        file: file,
+        image: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
+  }
+  let imagePreview = <div >Please select an Image for Preview</div>
+  if (image.image) {
+    imagePreview = (<img src={image.image} width="100px" />);
   }
   return (
     <Dialog onClose={() => setOpenForm(false)} open={open} >
@@ -197,6 +221,14 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
             >
               Add found in
             </Button>
+          </Grid>
+          <Grid item xs={12} className={classes.boxOutside}>
+            <input className="fileInput"
+              type="file"
+              onChange={(e) => handleImage(e)} />
+            <div>
+              {imagePreview}
+            </div>
           </Grid>
           <Grid item xs={12} >
             <Button
