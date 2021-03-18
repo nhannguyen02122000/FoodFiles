@@ -12,7 +12,7 @@ export default App = () => {
   return (
     <Drawer.Navigator
       drawerStyle={{
-        backgroundColor: theme.BACKGROUND_COLOR,
+        //backgroundColor: theme.BACKGROUND_COLOR,
       }}
     >
       <Drawer.Screen name="Homes" component={RootNavigation} />

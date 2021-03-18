@@ -1,5 +1,7 @@
 import React from 'react'
 import Home from '../home/index';
+import Tracking from '../tracking/index'
+import List from '../list/index'
 import * as language from '../../constants/language'
 const iconHome = require('../../../assets/tabbar/home.png');
 const iconExplore = require('../../../assets/tabbar/explore.png');
@@ -20,12 +22,12 @@ const tabNavigationData = [
   },
   {
     name: language.BOTTOM_NAV_BAR_TRACKING,
-    component: Home,
+    component: Tracking,
     icon: iconTracking
   },
   {
     name: language.BOTTOM_NAV_BAR_LIST,
-    component: Home,
+    component: List,
     icon: iconList
   },
 ];

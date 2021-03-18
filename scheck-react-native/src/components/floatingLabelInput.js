@@ -10,15 +10,20 @@ const FloatingLabelInput = (props) => {
 
   return (
     <Input
-      label={isFocused ? props.label : ' '}
+      label={isFocused || props.value ? props.label : ' '}
       labelStyle={props.labelStyle}
       placeholder={!isFocused ? props.placeholder : null}
       inputStyle={props.inputStyle}
-      inputContainerStyle={props.inputCon2tainerStyle}
+      inputContainerStyle={props.inputContainerStyle}
       containerStyle={props.containerStyle}
       onChangeText={props.onChangeText}
+      placeholderTextColor={props.placeholderTextColor}
+      value={props.value}
+      secureTextEntry={props.secureTextEntry}
+      InputComponent={props.InputComponent}
       onFocus={handleFocus}
       onBlur={handleBlur}
+      keyboardType={props.keyboardType}
     />
   )
 }

@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, PixelRatio } from 'react-native'
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView
+} from 'react-native'
 import { color } from '../../constants/color'
 import { REGISTERSCREEN } from '../../constants/language'
 import { Icon, Input, Button } from 'react-native-elements'
 import { useDispatch } from 'react-redux'
 import * as authAction from '../../store/reducer/userReducer'
+import { normalize } from '../../constants/size'
+import FloatingLabelInput from '../../components/floatingLabelInput'
+import auth from '@react-native-firebase/auth';
 
 const RegisterForm = (props) => {
   const [mess, setMess] = useState('')
@@ -12,6 +20,7 @@ const RegisterForm = (props) => {
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const registerHandler = async () => {
+    console.log("register")
     if (user.email === '' || user.password === '') {
       setMess(REGISTERSCREEN.EMPTY)
       return
@@ -22,101 +31,105 @@ const RegisterForm = (props) => {
     }
     try {
       setLoading(true)
-      const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAr-s6K-0G3do1xDqB0xhiCFghMC2xMsho', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: user.email,
-          password: user.password,
-          returnSecureToken: true
-        })
-      })
-      const resData = await response.json()
-      if (!response.ok) {
-        console.log(resData.error.message)
-        throw new Error(resData.error.message)
-      }
-      dispatch(authAction.signup({ ...resData, email: user.email }))
+      const response = await auth()
+        .createUserWithEmailAndPassword(user.email, user.password)
+      console.log(response)
+      dispatch(authAction.signup({ id: response.user.uid, email: user.email }))
+      props.setOpenProfileForm(true)
+      props.setLogin(true)
+      props.setIsCloseLogin(true)
     }
     catch (er) {
       setMess(er.toString())
+      setLoading(false)
     }
   }
   return (
-    <View style={styles.registerForm}>
-      <View style={styles.headerForm}>
-        <View style={styles.smallWhiteLine}></View>
-        <Text style={styles.headerTitle}>{REGISTERSCREEN.REGISTER}</Text>
-        <View>
-          <Icon
-            reverse
-            name='clear'
-            type='material'
-            color={color.PRIMARY}
-            size={PixelRatio.getPixelSizeForLayoutSize(36)}
-            onPress={() => props.setLogin(true)}
+    <ScrollView style={styles.scrollViewStyle}>
+      <View style={styles.registerForm}>
+        <View style={styles.headerForm}>
+          <View style={styles.smallWhiteLine}></View>
+          <Text style={styles.headerTitle}>{REGISTERSCREEN.REGISTER}</Text>
+          <View>
+            <Icon
+              reverse
+              name='clear'
+              type='material'
+              color={color.PRIMARY}
+              size={normalize(36)}
+              onPress={() => props.setLogin(true)}
+            />
+          </View>
+        </View>
+        {mess !== '' ? <Text style={styles.errMess}>{mess}</Text> : null}
+        <View style={styles.bodyForm}>
+          <FloatingLabelInput
+            labelStyle={styles.labelStyle}
+            label={REGISTERSCREEN.EMAIL}
+            placeholder={REGISTERSCREEN.EMAIL}
+            inputStyle={styles.input}
+            inputContainerStyle={styles.containerInput}
+            placeholderTextColor={color.WHITE}
+            value={user.email}
+            onChangeText={value => setUser(user => ({ ...user, email: value }))}
+          />
+          <FloatingLabelInput
+            labelStyle={styles.labelStyle}
+            label={REGISTERSCREEN.PASSWORD}
+            placeholder={REGISTERSCREEN.PASSWORD}
+            inputStyle={styles.input}
+            inputContainerStyle={styles.containerInput}
+            placeholderTextColor={color.WHITE}
+            secureTextEntry={true}
+            value={user.password}
+            onChangeText={value => setUser(user => ({ ...user, password: value }))}
+          />
+          <FloatingLabelInput
+            labelStyle={styles.labelStyle}
+            label={REGISTERSCREEN.CONFIRMPASSWORD}
+            placeholder={REGISTERSCREEN.CONFIRMPASSWORD}
+            inputStyle={styles.input}
+            inputContainerStyle={styles.containerInput}
+            placeholderTextColor={color.WHITE}
+            secureTextEntry={true}
+            value={user.confirmPassword}
+            onChangeText={value => setUser(user => ({ ...user, confirmPassword: value }))}
           />
         </View>
-      </View>
-      <Text style={styles.errMess}>{mess}</Text>
-      <View style={styles.bodyForm}>
-        <Input
-          placeholder={REGISTERSCREEN.EMAIL}
-          inputStyle={styles.input}
-          inputContainerStyle={styles.containerInput}
-          placeholderTextColor={color.WHITE}
-          onChangeText={value => setUser(user => ({ ...user, email: value }))}
-        />
-        <Input
-          placeholder={REGISTERSCREEN.PASSWORD}
-          inputStyle={styles.input}
-          inputContainerStyle={styles.containerInput}
-          placeholderTextColor={color.WHITE}
-          secureTextEntry={true}
-          onChangeText={value => setUser(user => ({ ...user, password: value }))}
-        />
-        <Input
-          placeholder={REGISTERSCREEN.CONFIRMPASSWORD}
-          inputStyle={styles.input}
-          inputContainerStyle={styles.containerInput}
-          placeholderTextColor={color.WHITE}
-          secureTextEntry={true}
-          onChangeText={value => setUser(user => ({ ...user, confirmPassword: value }))}
+        <Button
+          title={REGISTERSCREEN.NEXT}
+          type="solid"
+          buttonStyle={styles.nextBtn}
+          titleStyle={styles.nextBtnTitle}
+          onPress={registerHandler}
+          loading={loading}
+          loadingProps={{ color: color.PRIMARY }}
+          disabled={loading}
         />
       </View>
-      <Button
-        title={REGISTERSCREEN.NEXT}
-        type="solid"
-        buttonStyle={styles.nextBtn}
-        titleStyle={styles.nextBtnTitle}
-        onPress={registerHandler}
-        loading={loading}
-        loadingProps={{ color: color.PRIMARY }}
-        disabled={loading}
-      />
-    </View>
+    </ScrollView>
   )
 }
 export default RegisterForm
 const styles = StyleSheet.create({
+  scrollViewStyle: {
+    marginTop: -normalize(460),
+    elevation: 10,
+    width: normalize(328),
+  },
   registerForm: {
-    position: 'absolute',
-    width: PixelRatio.getPixelSizeForLayoutSize(346),
-    height: PixelRatio.getPixelSizeForLayoutSize(432),
-    top: PixelRatio.getPixelSizeForLayoutSize(193),
+    width: normalize(346),
+    // height: normalize(432),
+    alignItems: 'center',
+    width: normalize(328),
     backgroundColor: color.PRIMARY,
-    zIndex: 6,
-    elevation: 6,
     borderRadius: 8,
-    alignItems: "center"
   },
   headerForm: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    padding: PixelRatio.getPixelSizeForLayoutSize(20),
+    padding: normalize(10),
     paddingLeft: 0,
     paddingBottom: 0
   },
@@ -124,42 +137,50 @@ const styles = StyleSheet.create({
     color: color.WHITE,
     fontFamily: "OpenSans",
     fontWeight: "bold",
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(26),
-    paddingLeft: PixelRatio.getPixelSizeForLayoutSize(26),
+    fontSize: normalize(20),
+    paddingLeft: normalize(26),
     marginRight: 'auto'
   },
   smallWhiteLine: {
-    width: PixelRatio.getPixelSizeForLayoutSize(5),
-    height: PixelRatio.getPixelSizeForLayoutSize(48),
+    width: normalize(5),
+    height: normalize(48),
     backgroundColor: color.WHITE,
   },
   bodyForm: {
-    padding: PixelRatio.getPixelSizeForLayoutSize(20),
-    paddingLeft: PixelRatio.getPixelSizeForLayoutSize(25),
+    padding: normalize(20),
+    paddingLeft: normalize(25),
     width: "100%"
   },
   nextBtn: {
-    height: PixelRatio.getPixelSizeForLayoutSize(48),
-    width: PixelRatio.getPixelSizeForLayoutSize(124),
+    height: normalize(48),
+    width: normalize(124),
     borderColor: color.WHITE,
-    backgroundColor: color.WHITE
+    backgroundColor: color.WHITE,
+    marginTop: -normalize(10),
+    marginBottom: normalize(10)
   },
   nextBtnTitle: {
     color: color.PRIMARY,
     fontWeight: 'bold',
     fontFamily: "Quicksand",
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(14)
+    fontSize: normalize(14)
   },
   input: {
     fontFamily: "Quicksand",
-    fontSize: PixelRatio.getPixelSizeForLayoutSize(20),
+    fontSize: normalize(14),
     color: color.WHITE,
   },
   containerInput: {
-    borderColor: color.WHITE
+    borderColor: color.WHITE,
+    marginTop: -normalize(20)
   },
   errMess: {
-    color: color.WARNING,
+    color: color.WHITE,
     fontFamily: "Quicksand"
-  }
+  },
+  labelStyle: {
+    fontFamily: 'Quicksand',
+    fontSize: normalize(12),
+    color: color.WHITE
+  },
 });

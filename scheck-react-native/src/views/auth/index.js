@@ -1,79 +1,71 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, KeyboardAvoidingView, Image, Platform, PixelRatio } from 'react-native'
-import { useFonts } from 'expo-font'
+import React, { useState, useEffect } from 'react'
+import {
+  View,
+  Dimensions,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Image,
+  Platform,
+  ScrollView,
+  Keyboard,
+  TouchableWithoutFeedback,
+  TextInput
+} from 'react-native'
+
 import { color } from '../../constants/color'
+import { normalize } from '../../constants/size'
 import LoginForm from './loginForm'
 import RegisterForm from './registerForm'
 import ProfileForm from './profileForm'
 
 const Auth = () => {
-  const [loaded] = useFonts({
-    OpenSans: require('../../../assets/fonts/OpenSans-Regular.ttf'),
-    Quicksand: require('../../../assets/fonts/Quicksand-Regular.ttf'),
-  })
-  const [isLogin, setIsLogin] = useState(false)
-  const [openProfileForm, setOpenProfileForm] = useState(true)
-  if (!loaded) {
-    return null;
-  }
-  console.log(isLogin)
+
+  const [isLogin, setIsLogin] = useState(true)
+  const [isCloseLogin, setIsCloseLogin] = useState(false)
+  const [openProfileForm, setOpenProfileForm] = useState(false)
+  const styles = StyleSheet.create({
+    screen: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: 'flex-start',
+      height: "100%",
+      width: "100%",
+      backgroundColor: color.BACKGROUND
+    },
+    rectangleBehind: {
+      position: 'absolute',
+      height: normalize(370),
+      width: isLogin ? normalize(305) : normalize(280),
+      top: normalize(120),
+      backgroundColor: "#fff",
+      borderRadius: 8,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 4,
+        height: 5,
+      },
+      shadowOpacity: 0.14,
+      shadowRadius: 4.65,
+      zIndex: 0,
+      elevation: 1,
+    },
+    tinyLogo: {
+      width: normalize(64),
+      height: normalize(88),
+      top: normalize(30)
+    },
+  });
   return (
-    <KeyboardAvoidingView
-      style={styles.screen}
-      behavior="padding"
-    >
-      <View style={styles.backgroundTop}>
-        <Image
-          style={styles.tinyLogo}
-          source={require('../../../assets/logo/logo.png')}
-        />
-      </View>
+    <View style={styles.screen}>
+      <Image
+        style={styles.tinyLogo}
+        source={require('../../../assets/logo/logo.png')}
+      />
       <View style={styles.rectangleBehind}></View>
-      <LoginForm setRegister={setIsLogin} />
-      {!isLogin ? <RegisterForm setLogin={setIsLogin} /> : null}
+      {!isCloseLogin ? <LoginForm setRegister={setIsLogin} isLogin={isLogin} /> : null}
+      {!isLogin ? <RegisterForm setLogin={setIsLogin} setOpenProfileForm={setOpenProfileForm} setIsCloseLogin={setIsCloseLogin} /> : null}
       {openProfileForm ? <ProfileForm /> : null}
-    </KeyboardAvoidingView >
+    </View>
   )
 }
 export default Auth
-const styles = StyleSheet.create({
-  screen: {
-    flex: -1,
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: "100%"
-  },
-  backgroundTop: {
-    //backgroundColor: color.PRIMARY,
-    width: "100%",
-    height: PixelRatio.getPixelSizeForLayoutSize(296),
-    alignItems: "center"
-  },
-  rectangleBehind: {
-    position: 'absolute',
-    height: PixelRatio.getPixelSizeForLayoutSize(370),
-    width: PixelRatio.getPixelSizeForLayoutSize(312),
-    top: PixelRatio.getPixelSizeForLayoutSize(177),
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 4,
-      height: 5,
-    },
-    shadowOpacity: 0.14,
-    shadowRadius: 4.65,
-    elevation: 5,
-    zIndex: 0
-  },
-  tinyLogo: {
-    width: PixelRatio.getPixelSizeForLayoutSize(64),
-    height: PixelRatio.getPixelSizeForLayoutSize(88),
-    top: PixelRatio.getPixelSizeForLayoutSize(88)
-  },
-  scrollview: {
-    width: "100%",
-    height: "100%"
-  }
-});

@@ -6,5 +6,7 @@ export const color = {
   PRIMARY: "#F27E4C",
   GRAY: "gray",
   WARNING: "red",
-  WHITE: "white"
+  WHITE: "white",
+  BLACK: "black",
+  BACKGROUND:"#fffff4"
 }

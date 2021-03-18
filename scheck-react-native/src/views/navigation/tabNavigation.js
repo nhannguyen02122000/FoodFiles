@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Text, View, Image, StyleSheet, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as theme from "../../constants/color"
-
+import { color } from "../../constants/color"
 import tabNavData from './tabNavData';
 
 const Tab = createBottomTabNavigator();
@@ -27,7 +26,7 @@ export default BottomTabs = () => {
             ),
             tabBarLabel: ({ focused }) =>
               <Text
-                style={{ fontSize: 12, color: focused ? theme.PRIMARY_COLOR : theme.GRAY_COLOR }}
+                style={{ fontSize: 12, color: focused ? color.PRIMARY : color.GRAY }}
               >
                 {item.name}
               </Text>,
@@ -50,6 +49,6 @@ const styles = StyleSheet.create({
     height: 25,
   },
   tabBarIconFocused: {
-    tintColor: theme.PRIMARY_COLOR,
+    tintColor: color.PRIMARY,
   },
 });
