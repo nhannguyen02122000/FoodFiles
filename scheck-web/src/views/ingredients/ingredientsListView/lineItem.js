@@ -45,6 +45,7 @@ const LineItem = ({ ingredient, index, ...rest }) => {
       <TableCell >{ingredient.name}</TableCell>
       <TableCell >{ingredient.description}</TableCell>
       <TableCell>{ingredient.role}</TableCell>
+      <TableCell>{ingredient.eNumber}</TableCell>
       <TableCell >{ingredient.toxicityLevel}</TableCell>
       <TableCell>{ingredient.ADI}</TableCell>
       <TableCell>{foundIn}</TableCell>

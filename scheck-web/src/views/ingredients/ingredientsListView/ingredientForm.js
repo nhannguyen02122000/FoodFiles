@@ -38,6 +38,7 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
     toxicityLevel: curIngredient ? curIngredient.toxicityLevel : '',
     ADI: curIngredient ? curIngredient.ADI : '',
     foundIn: curIngredient ? curIngredient.foundIn : [],
+    eNumber: ''
   })
   const [image, setImage] = useState({ image: '', file: null })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -151,6 +152,14 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
               label="Role"
               value={ingredient.role}
               onChange={e => handleChange("role", e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} className={classes.boxOutside}>
+            <TextField
+              fullWidth
+              label="E Number"
+              value={ingredient.eNumber}
+              onChange={e => handleChange("eNumber", e.target.value)}
             />
           </Grid>
           <Grid item xs={12} className={classes.boxOutside}>
