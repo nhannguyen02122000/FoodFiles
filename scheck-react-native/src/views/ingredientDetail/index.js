@@ -14,6 +14,7 @@ import { INGDETAIL } from '../../constants/language'
 import { normalize } from '../../constants/size'
 import { color } from '../../constants/color'
 import { ingredientRef } from '../../store/query'
+import { useSelector } from 'react-redux'
 
 const { width, height } = Dimensions.get('screen')
 const styles = StyleSheet.create({
@@ -75,22 +76,31 @@ const styles = StyleSheet.create({
 })
 const IngredientDetail = (props) => {
   const [ingInfo, setIngInfo] = useState({})
+  const ingLst = useSelector(state => state.ingredients.ingredients)
   useEffect(() => {
     const getData = async () => {
-      const response = await ingredientRef.doc(props.route.params.ingId).get()
-      const data = response.data()
-
+      let data = null
+      if (ingLst.length === 0) {
+        const response = await ingredientRef.doc(props.route.params.ingId).get()
+        data = response.data()
+      }
+      else {
+        for (const item of ingLst) {
+          if (item.id === props.route.params.ingId) {
+            data = item
+            break
+          }
+        }
+      }
       let url = null
       if (data.imageUrl !== '') url = await storage().ref(data.imageUrl).getDownloadURL()
       data.url = url
       setIngInfo(data)
-      console.log("query", data)
-
     }
     getData()
   }, [])
   let styleToxic = styles.toxicityLevel
-  console.log(ingInfo)
+
   if (ingInfo.toxicityLevel) {
     if (ingInfo.toxicityLevel.toUpperCase() === 'SAFE') styleToxic = { ...styles.toxicityLevel, ...styles.safeLevel }
     if (ingInfo.toxicityLevel.toUpperCase() === 'SUSPICIOUS') styleToxic = { ...styles.toxicityLevel, ...styles.suspiciousLevel }

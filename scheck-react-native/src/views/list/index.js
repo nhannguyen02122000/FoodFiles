@@ -15,6 +15,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import { ingredientRef } from '../../store/query'
 import { FlatList } from 'react-native';
 import { normalize } from '../../constants/size'
+import * as ingAction from '../../store/reducer/ingredientReducer'
+import { useSelector, useDispatch } from 'react-redux'
 
 const styles = StyleSheet.create({
   screen: {
@@ -58,22 +60,35 @@ const styles = StyleSheet.create({
   }
 })
 const List = ({ navigation }) => {
+  const dispatch = useDispatch()
+  const ingLst = useSelector(state => state.ingredients.ingredients)
   const [ingredientLst, setIngredientLst] = useState([])
   const scrollViewRef = useRef()
   const [charChosen, setCharChosen] = useState(0)
   useEffect(() => {
     const getIngre = async () => {
       const docLst = await ingredientRef.get()
+      const dataToStore = []
       const data = []
       for (let i = 0; i < 26; i++) data.push([])
       docLst.forEach(doc => {
-        console.log(doc.data())
+        dataToStore.push(doc.data())
         const letter = doc.data().name.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0)
         data[letter].push(doc.data())
       })
       setIngredientLst(data)
+      dispatch(ingAction.setIngredients(dataToStore))
     }
-    getIngre()
+    if (ingLst.length === 0) getIngre()
+    else {
+      const data = []
+      for (let i = 0; i < 26; i++) data.push([])
+      ingLst.forEach(doc => {
+        const letter = doc.name.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0)
+        data[letter].push(doc)
+      })
+      setIngredientLst(data)
+    }
   }, [])
 
   useEffect(() => {

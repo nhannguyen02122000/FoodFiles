@@ -95,3 +95,10 @@ export const INGDETAIL = {
 export const SEARCH = {
   SEARCHPLACEHOLDER: "Search additives or E numbers"
 }
+export const EXPLORE = {
+  HEALTH: "HEALTH",
+  NUTRITION: "NUTRITION",
+  DIET: "DIET",
+  READMORE: "Read more:",
+  READ: "READ"
+}

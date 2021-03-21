@@ -14,23 +14,31 @@ import { normalize } from '../../constants/size'
 import { SEARCH } from '../../constants/language'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ingredientRef } from '../../store/query'
+import { useSelector, useDispatch } from 'react-redux'
+import * as ingAction from '../../store/reducer/ingredientReducer'
 
 const Search = ({ navigation }) => {
+  const dispatch = useDispatch()
   const [itemLst, setItemLst] = useState([])
   const [prevSearch, setPrevSearch] = useState([])
   const [curSearch, setCurSearch] = useState('')
   const [filteredData, setFilteredData] = useState([])
-  useEffect(() => console.log('trigger'))
+  const ingLst = useSelector(state => state.ingredients.ingredients)
+
   useEffect(() => {
     const getIngre = async () => {
       const docLst = await ingredientRef.get()
       const data = []
       docLst.forEach(doc => {
-        data.push({ name: doc.data().name, id: doc.data().id })
+        data.push(doc.data())
       })
       setItemLst(data)
+      dispatch(ingAction.setIngredients(data))
     }
-    getIngre()
+    if (ingLst.length === 0) getIngre()
+    else {
+      setItemLst(ingLst)
+    }
     AsyncStorage.getItem('searchedValue').then(data => {
       if (data) {
         setPrevSearch(JSON.parse(data))
@@ -39,7 +47,6 @@ const Search = ({ navigation }) => {
       .catch(er => console.log(er))
   }, [])
   const searchHandler = (value) => {
-    console.log(value, itemLst)
     setCurSearch(value)
     setFilteredData(itemLst.filter(item => item.name.toUpperCase().includes(value.toUpperCase())))
   }
@@ -53,7 +60,6 @@ const Search = ({ navigation }) => {
       ingId: item.id
     })
   }
-  console.log(prevSearch)
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
