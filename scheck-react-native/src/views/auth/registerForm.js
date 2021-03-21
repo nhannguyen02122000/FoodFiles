@@ -105,6 +105,7 @@ const RegisterForm = (props) => {
           loading={loading}
           loadingProps={{ color: color.PRIMARY }}
           disabled={loading}
+          containerStyle={{ marginBottom: normalize(10) }}
         />
       </View>
     </ScrollView>
@@ -156,14 +157,15 @@ const styles = StyleSheet.create({
     width: normalize(124),
     borderColor: color.WHITE,
     backgroundColor: color.WHITE,
-    marginTop: -normalize(10),
-    marginBottom: normalize(10)
+    //marginTop: -normalize(10),
+    //marginBottom: normalize(10),
+
   },
   nextBtnTitle: {
     color: color.PRIMARY,
     fontWeight: 'bold',
     fontFamily: "Quicksand",
-    fontSize: normalize(14)
+    fontSize: normalize(14),
   },
   input: {
     fontFamily: "Quicksand",
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
   },
   containerInput: {
     borderColor: color.WHITE,
-    marginTop: -normalize(20)
+    marginTop: -normalize(15)
   },
   errMess: {
     color: color.WHITE,

@@ -64,8 +64,26 @@ export const HOME = {
   HI: "Hi"
 }
 export const TRACKING = {
-  DAILYCAL: "DAILY CALORIES\nCALCULATOR"
+  DAILYCAL: "DAILY CALORIES\nCALCULATOR",
+  CALC: "CALCULATE",
+  AGE: 'AGE',
+  HEIGHT: 'HEIGHT',
+  WEIGHT: 'WEIGHT',
+  GENDER: 'GENDER',
+  MALE: "Male",
+  FEMALE: "Female",
+  OTHER: "Other",
+  PLEASEAGE: "Please fill in your age",
+  PLEASEWEIGHT: "Please fill in your weight",
+  PLEASEHEIGHT: "Please fill in your height",
 }
 export const LIST = {
 
+}
+export const INGDETAIL = {
+  ENUM: "E number",
+  ADI: "Acceptable daily intake",
+  ROLE: "Role",
+  FOUNDIN: "Usually found in",
+  DES: "Description"
 }

@@ -8,5 +8,9 @@ export const color = {
   WARNING: "red",
   WHITE: "white",
   BLACK: "black",
-  BACKGROUND:"#fffff4"
+  BACKGROUND: "#fffff4",
+  SAFE: "#40B93C",
+  NOSIGN: 'blue',
+  DANGEROUS: 'red',
+  SUSPICIOUS: 'gold'
 }

@@ -1,9 +1,33 @@
 import React from 'react';
-import { TouchableOpacity, Image } from 'react-native';
+import {
+  TouchableOpacity,
+  Image,
+  StyleSheet
+} from 'react-native';
 
 import TabNavigation from './tabNavigation';
-import Tracking from '../tracking/index'
+import IngredientDetail from '../ingredientDetail/index'
+import { color } from '../../constants/color'
 
+const headerLeftComponent = (props) => {
+  return (
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={{
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+      }}
+    >
+      <Image
+        source={require('../../../assets/arrow_back.png')}
+        resizeMode="contain"
+        style={{
+          height: 20,
+        }}
+      />
+    </TouchableOpacity>
+  )
+}
 const StackNavigationData = [
   {
     headerLeft: null,
@@ -11,9 +35,9 @@ const StackNavigationData = [
     component: TabNavigation,
   },
   {
-    headerLeft: null,
-    name: 'abc',
-    component: Tracking,
+    headerLeft: headerLeftComponent,
+    name: 'ingredientDetail',
+    component: IngredientDetail,
   },
 ]
 

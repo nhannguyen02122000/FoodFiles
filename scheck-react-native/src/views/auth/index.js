@@ -34,7 +34,7 @@ const Auth = () => {
     },
     rectangleBehind: {
       position: 'absolute',
-      height: normalize(370),
+      height: normalize(200),
       width: isLogin ? normalize(305) : normalize(280),
       top: normalize(120),
       backgroundColor: "#fff",

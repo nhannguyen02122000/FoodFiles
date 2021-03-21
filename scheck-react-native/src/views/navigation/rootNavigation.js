@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     //flex: 1,
     //alignItems: 'center',
     //  justifyContent: 'center',
-    backgroundColor: 'red',
+    //backgroundColor: 'red',
     margin: 0,
     padding: 0
   }
@@ -52,16 +52,23 @@ export default NavigatorView = (props) => {
   // if (!user.isAuthenticated) return <AuthScreen />
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerTransparent: true
+      }}
+    >
       {stackNavData.map((item, idx) => (
         <Stack.Screen
           key={`stackItem-${idx}`}
           name={item.name}
           component={item.component}
           // options={{ headerShown: false }}
+          headerTransparent
           options={{
             headerLeft: item.headerLeft || headerLeftComponentMenu,
             headerTitleStyle: item.headerTitleStyle || styles.headerTitleStyle,
+            headerTitle: '',
           }}
         />
       ))}

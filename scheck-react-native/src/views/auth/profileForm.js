@@ -18,7 +18,7 @@ import { Picker } from '@react-native-picker/picker'
 
 const ProfileForm = (props) => {
   const [profile, setProfile] = useState({
-    name: '',
+    fullfullname: '',
     gender: USERDETAILAUTHSCREEN.OTHER,
     age: '',
     height: '',
@@ -27,12 +27,13 @@ const ProfileForm = (props) => {
   })
   const [mess, setMess] = useState('')
   const dispatch = useDispatch()
+  const { user } = useSelector(state => state.user)
   const skipHandler = () => {
     dispatch(authAction.authenticated())
+    userRef.doc(user.id).set({ ...profile, id: user.id, email: user.email, role: "User" }).then()
   }
-  const { user } = useSelector(state => state.user)
   const createHandler = () => {
-    if (profile.name === '') {
+    if (profile.fullname === '') {
       setMess(USERDETAILAUTHSCREEN.NAMENOTNULL)
       return
     }
@@ -54,7 +55,7 @@ const ProfileForm = (props) => {
     }
     setMess('')
     console.log(user)
-    userRef.doc(user.id).set(profile).then()
+    userRef.doc(user.id).set({ ...profile, id: user.id, email: user.email, role: "User" }).then()
     dispatch(authAction.setUser(({ ...profile, isAuthenticated: true })))
   }
   return (
@@ -72,8 +73,8 @@ const ProfileForm = (props) => {
               placeholder={USERDETAILAUTHSCREEN.NAME}
               inputStyle={styles.input}
               inputContainerStyle={styles.inputContainerStyle}
-              value={profile.name}
-              onChangeText={value => setProfile(profile => ({ ...profile, name: value }))}
+              value={profile.fullname}
+              onChangeText={value => setProfile(profile => ({ ...profile, fullname: value }))}
             />
             <View style={{ marginBottom: normalize(10), marginTop: -20 }}>
               <Text
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
     fontFamily: "Quicksand",
     fontSize: normalize(14),
     //color: color.PRIMARY,
-    fontWeight: 'bold'
+    //fontWeight: 'bold'
   },
   errMess: {
     color: color.WARNING,
