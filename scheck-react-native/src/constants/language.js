@@ -46,22 +46,27 @@ export const USERDETAILAUTHSCREEN = {
 }
 export const WALKTHROUGH = {
   SCREEN1: {
-    TITLE: "Hello world",
-    CONTENT: "là lá la là la"
+    TITLE: "You are what you eat",
+    CONTENT: "In a literal sense, if you eat healthily, you will be healthy!The health benefits of clean food aren’t limited to physical health, it can also improve your mental health and cognitive functioning too!"
   },
   SCREEN2: {
-    TITLE: "Hello Galaxy",
-    CONTENT: "Đây là Nhân :D"
+    TITLE: "If you can’t pronounce it, don’t eat it",
+    CONTENT: "We encourage you to opt for clean food that is minimally processed and as direct from nature as possible. They’re whole and free of additives, colorings, flavorings, sweeteners, and hormones. "
   },
   SCREEN3: {
-    TITLE: "Hello Universe",
-    CONTENT: "Nhân rất nghiệp"
+    TITLE: "On this health journey, you are never alone",
+    CONTENT: "But in case you need to head out to the groceries when cravings strike, take us with you and be informed about the ingredients and calories you’re about to take in. Spoiler alert: not all of them are bad!"
   },
   GETSTARTED: "GET STARTED",
   NEXT: "Next"
 }
 export const HOME = {
-  HI: "Hi"
+  HI: "Hi",
+  HELLO: "Hello",
+  ANONYMOUS: "Anonymous",
+  SUBTITLEHEADER: "Don't forget to check out\nthe ingredient list when\nyou go food shopping",
+  FIND: "Find additives or E numbers",
+  FOODFACTTITLE: "Here’s a food fact for today!"
 }
 export const TRACKING = {
   DAILYCAL: "DAILY CALORIES\nCALCULATOR",
@@ -86,4 +91,7 @@ export const INGDETAIL = {
   ROLE: "Role",
   FOUNDIN: "Usually found in",
   DES: "Description"
+}
+export const SEARCH = {
+  SEARCHPLACEHOLDER: "Search additives or E numbers"
 }

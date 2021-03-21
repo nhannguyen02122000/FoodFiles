@@ -12,15 +12,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonCircle: {
-    width: normalize(296),
-    height: normalize(296),
+    width: normalize(200),
+    height: normalize(200),
     marginVertical: normalize(50),
     borderRadius: 20,
   },
   title: {
     fontWeight: "bold",
     fontSize: normalize(20),
-    marginBottom: normalize(20)
+    marginBottom: normalize(20),
+    fontFamily: "OpenSans",
+    color: "#343434",
+    maxWidth: "75%",
+    textAlign: 'center'
   },
   btn: {
     borderRadius: 30,
@@ -31,6 +35,13 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 15
   },
+  text: {
+    maxWidth: "80%",
+    fontFamily: "Quicksand",
+    fontSize: normalize(14),
+    color: "#9EA9B1",
+    textAlign: 'center'
+  }
 });
 const slides = [
   {

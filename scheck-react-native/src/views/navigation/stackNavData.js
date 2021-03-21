@@ -7,6 +7,7 @@ import {
 
 import TabNavigation from './tabNavigation';
 import IngredientDetail from '../ingredientDetail/index'
+import Search from '../search/index'
 import { color } from '../../constants/color'
 
 const headerLeftComponent = (props) => {
@@ -39,6 +40,11 @@ const StackNavigationData = [
     name: 'ingredientDetail',
     component: IngredientDetail,
   },
+  {
+    headerLeft: headerLeftComponent,
+    name: 'searchIngre',
+    component: Search
+  }
 ]
 
 export default StackNavigationData;
