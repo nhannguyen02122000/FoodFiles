@@ -102,3 +102,6 @@ export const EXPLORE = {
   READMORE: "Read more:",
   READ: "READ"
 }
+export const ARCDETAIL = {
+  SRC: "Source"
+}

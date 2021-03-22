@@ -12,5 +12,7 @@ export const color = {
   SAFE: "#40B93C",
   NOSIGN: 'blue',
   DANGEROUS: 'red',
-  SUSPICIOUS: 'gold'
+  SUSPICIOUS: 'gold',
+  HEART: '#FF6262',
+  BOOKMARK: '#FFC529'
 }

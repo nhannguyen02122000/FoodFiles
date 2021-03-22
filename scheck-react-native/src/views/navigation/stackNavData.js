@@ -7,6 +7,7 @@ import {
 
 import TabNavigation from './tabNavigation';
 import IngredientDetail from '../ingredientDetail/index'
+import ArticleDetail from '../explore/articleDetail'
 import Search from '../search/index'
 import { color } from '../../constants/color'
 
@@ -44,6 +45,11 @@ const StackNavigationData = [
     headerLeft: headerLeftComponent,
     name: 'searchIngre',
     component: Search
+  },
+  {
+    headerLeft: headerLeftComponent,
+    name: 'articleDetail',
+    component: ArticleDetail
   }
 ]
 

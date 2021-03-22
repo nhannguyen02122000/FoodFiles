@@ -20,7 +20,7 @@ import storage from '@react-native-firebase/storage'
 import { ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const ArticleList = () => {
+const ArticleList = ({ navigation }) => {
   const [selectedArticleType, setSelectedArticleType] = useState(0)
   const [articleLst, setArticleLst] = useState([])
   const [reactArticle, setReactArticle] = useState({ love: [], bookmark: [] })
@@ -74,29 +74,38 @@ const ArticleList = () => {
   useEffect(() => {
     AsyncStorage.setItem('article', JSON.stringify(reactArticle))
   }, [reactArticle])
-  const loveHandler = (id) => {
-    if (reactArticle.love.includes(id)) return
-    setReactArticle(cur => ({
-      ...cur,
-      love: [].concat(cur.love, [id])
-    }))
-  }
-  const bookmarkHandler = (id) => {
-    if (reactArticle.bookmark.includes(id)) return
-    setReactArticle(cur => ({
-      ...cur,
-      bookmark: [].concat(cur.bookmark, [id])
-    }))
+  const reactHandler = (type, id) => {
+    setReactArticle(cur => {
+      if (reactArticle[type].includes(id)) {
+        let newAr = cur[type].filter(item => item != id)
+        console.log(newAr)
+        return {
+          ...cur,
+          [type]: newAr
+        }
+      }
+      else {
+        return {
+          ...cur,
+          [type]: [].concat(cur[type], [id])
+        }
+      }
+    })
   }
 
   let remainArticle = []
 
   for (let i = 1; i < articleLst.length; i++) {
     remainArticle.push(
-      <View style={styles.demoComp} key={i}>
-        <Image source={{ uri: articleLst[i].url }} style={styles.demoImg} />
-        <Text style={styles.demoHeadline}>{articleLst[i].headline}</Text>
-      </View>
+      <TouchableOpacity
+        key={i}
+        onPress={() => navigation.navigate('articleDetail', { ...articleLst[i] })}
+      >
+        <View style={styles.demoComp} >
+          <Image source={{ uri: articleLst[i].url }} style={styles.demoImg} />
+          <Text style={styles.demoHeadline}>{articleLst[i].summaryContent}</Text>
+        </View>
+      </TouchableOpacity>
     )
   }
 
@@ -137,18 +146,27 @@ const ArticleList = () => {
                 <Button
                   buttonStyle={styles.readBtn}
                   title={EXPLORE.READ}
+                  onPress={() => navigation.navigate('articleDetail', { ...articleLst[0] })}
                 />
                 <View style={styles.iconBtn}>
-                  <TouchableOpacity onPress={() => loveHandler(articleLst[0].id)}>
+                  <TouchableOpacity onPress={() => reactHandler("love", articleLst[0].id)}>
                     <Image
-                      source={require('../../../assets/explore/love.png')}
-                      style={reactArticle.love && reactArticle.love.includes(articleLst[0].id) ? { tintColor: 'red' } : null}
+                      source={
+                        reactArticle.love &&
+                          reactArticle.love.includes(articleLst[0].id) ?
+                          require('../../../assets/explore/loveFulfill.png') :
+                          require('../../../assets/explore/love.png')
+                      }
                     />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => bookmarkHandler(articleLst[0].id)}>
+                  <TouchableOpacity onPress={() => reactHandler("bookmark", articleLst[0].id)}>
                     <Image
-                      source={require('../../../assets/explore/bookmark.png')}
-                      style={reactArticle.bookmark && reactArticle.bookmark.includes(articleLst[0].id) ? { tintColor: '#FFC529' } : null}
+                      source={
+                        reactArticle.bookmark &&
+                          reactArticle.bookmark.includes(articleLst[0].id) ?
+                          require('../../../assets/explore/bookmarkFulfill.png') :
+                          require('../../../assets/explore/bookmark.png')
+                      }
                     />
                   </TouchableOpacity>
                 </View>
@@ -218,7 +236,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     maxWidth: '100%',
     //width: normalize(500),
-    height: normalize(150)
+    height: normalize(130)
   },
   mainComp: {
     backgroundColor: color.WHITE,
@@ -280,7 +298,7 @@ const styles = StyleSheet.create({
     margin: normalize(10),
     marginBottom: 20,
     width: normalize(180),
-    height: normalize(150),
+    height: normalize(160),
     backgroundColor: color.WHITE,
     shadowColor: "#000",
     shadowOffset: {
@@ -302,7 +320,7 @@ const styles = StyleSheet.create({
   demoHeadline: {
     padding: normalize(10),
     fontFamily: "OpenSans",
-    fontSize: normalize(12),
+    fontSize: normalize(11),
     color: 'rgba(0, 0, 0, 0.87)',
     fontWeight: 'bold'
   }
