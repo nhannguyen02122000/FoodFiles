@@ -9,7 +9,8 @@ import TabNavigation from './tabNavigation';
 import IngredientDetail from '../ingredientDetail/index'
 import ArticleDetail from '../explore/articleDetail'
 import Search from '../search/index'
-import { color } from '../../constants/color'
+import ForgotForm from '../auth/forgotForm'
+import Favorite from '../favorites/index'
 
 const headerLeftComponent = (props) => {
   return (
@@ -33,7 +34,7 @@ const headerLeftComponent = (props) => {
 const StackNavigationData = [
   {
     headerLeft: null,
-    name: ' ',
+    name: 'main',
     component: TabNavigation,
   },
   {
@@ -50,6 +51,16 @@ const StackNavigationData = [
     headerLeft: headerLeftComponent,
     name: 'articleDetail',
     component: ArticleDetail
+  },
+  {
+    headerLeft: headerLeftComponent,
+    name: 'forgotForm',
+    component: ForgotForm
+  },
+  {
+    headerLeft: headerLeftComponent,
+    name: 'favorite',
+    component: Favorite
   }
 ]
 

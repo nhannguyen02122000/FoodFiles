@@ -67,17 +67,21 @@ const List = ({ navigation }) => {
   const [charChosen, setCharChosen] = useState(0)
   useEffect(() => {
     const getIngre = async () => {
-      const docLst = await ingredientRef.get()
-      const dataToStore = []
-      const data = []
-      for (let i = 0; i < 26; i++) data.push([])
-      docLst.forEach(doc => {
-        dataToStore.push(doc.data())
-        const letter = doc.data().name.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0)
-        data[letter].push(doc.data())
-      })
-      setIngredientLst(data)
-      dispatch(ingAction.setIngredients(dataToStore))
+      try {
+        const docLst = await ingredientRef.get()
+        const dataToStore = []
+        const data = []
+        for (let i = 0; i < 26; i++) data.push([])
+        console.log(data)
+        docLst.forEach(doc => {
+          dataToStore.push(doc.data())
+          const letter = doc.data().name.trim().toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0)
+          data[letter].push(doc.data())
+        })
+        setIngredientLst(data)
+        dispatch(ingAction.setIngredients(dataToStore))
+      }
+      catch (er) { console.log(er) }
     }
     if (ingLst.length === 0) getIngre()
     else {

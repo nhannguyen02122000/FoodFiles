@@ -17,9 +17,10 @@ import { normalize } from '../../constants/size'
 import LoginForm from './loginForm'
 import RegisterForm from './registerForm'
 import ProfileForm from './profileForm'
+import ForgotForm from './forgotForm'
 
 const Auth = () => {
-
+  const [isForgot, setIsForgot] = useState(false)
   const [isLogin, setIsLogin] = useState(true)
   const [isCloseLogin, setIsCloseLogin] = useState(false)
   const [openProfileForm, setOpenProfileForm] = useState(false)
@@ -55,6 +56,7 @@ const Auth = () => {
       top: normalize(30)
     },
   });
+  if (isForgot) return <ForgotForm setIsForgot={setIsForgot} />
   return (
     <View style={styles.screen}>
       <Image
@@ -62,7 +64,7 @@ const Auth = () => {
         source={require('../../../assets/logo/logo.png')}
       />
       <View style={styles.rectangleBehind}></View>
-      {!isCloseLogin ? <LoginForm setRegister={setIsLogin} isLogin={isLogin} /> : null}
+      {!isCloseLogin ? <LoginForm setRegister={setIsLogin} isLogin={isLogin} setIsForgot={setIsForgot} /> : null}
       {!isLogin ? <RegisterForm setLogin={setIsLogin} setOpenProfileForm={setOpenProfileForm} setIsCloseLogin={setIsCloseLogin} /> : null}
       {openProfileForm ? <ProfileForm /> : null}
     </View>

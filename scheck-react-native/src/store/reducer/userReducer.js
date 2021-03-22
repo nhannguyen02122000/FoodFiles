@@ -44,6 +44,13 @@ const userReducer = (state = initialState, action) => {
         }
       }
     }
+    case actionType.SIGNOUT: {
+      return {
+        user: {
+          isAuthenticated: false
+        },
+      }
+    }
     default: {
       return { ...state }
     }
@@ -86,6 +93,13 @@ export const authenticated = () => {
   return dispatch => {
     dispatch({
       type: actionType.AUTHENTICATED
+    })
+  }
+}
+export const signout = () => {
+  return dispatch => {
+    dispatch({
+      type: actionType.SIGNOUT,
     })
   }
 }

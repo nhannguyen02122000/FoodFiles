@@ -105,3 +105,10 @@ export const EXPLORE = {
 export const ARCDETAIL = {
   SRC: "Source"
 }
+export const FORGOT = {
+  TITLE: "Forgot Your Password?",
+  CONTENT: "We’ll send instruction on how to reset your password to your registered email",
+  EMAIL: "Email",
+  SEND: "SEND",
+  BACK: "Back to Login"
+}

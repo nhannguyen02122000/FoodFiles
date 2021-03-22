@@ -9,6 +9,9 @@ import {
   ImageBackground,
   TouchableOpacity
 } from 'react-native'
+import {
+  Button
+} from 'react-native-elements'
 import { color } from '../../constants/color'
 import { ARCDETAIL } from '../../constants/language'
 import { normalize } from '../../constants/size'
@@ -145,14 +148,16 @@ const styles = StyleSheet.create({
     fontSize: normalize(20),
     marginHorizontal: normalize(20),
     marginTop: normalize(18),
-    marginBottom: normalize(8)
+    marginBottom: normalize(8),
+    textAlign: 'justify'
   },
   content: {
     marginHorizontal: normalize(20),
     fontFamily: 'Quicksand',
     fontSize: normalize(14),
     color: 'rgba(0, 0, 0, 0.6)',
-    marginBottom: normalize(50)
+    marginBottom: normalize(50),
+    textAlign: 'justify'
   },
   icon: {
     width: "100%",

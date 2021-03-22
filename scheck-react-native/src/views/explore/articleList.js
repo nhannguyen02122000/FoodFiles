@@ -34,8 +34,9 @@ const ArticleList = ({ navigation }) => {
       response.forEach(doc => {
         data.push(doc.data())
       })
-
+      //console.log(data)
       for (let item of data) {
+        console.log(item.imageUrl)
         if (item.imageUrl !== '') item.url = await storage().ref(item.imageUrl).getDownloadURL()
         else item.url = ''
       }
@@ -103,7 +104,7 @@ const ArticleList = ({ navigation }) => {
       >
         <View style={styles.demoComp} >
           <Image source={{ uri: articleLst[i].url }} style={styles.demoImg} />
-          <Text style={styles.demoHeadline}>{articleLst[i].summaryContent}</Text>
+          <Text style={styles.demoHeadline}>{articleLst[i].headline}</Text>
         </View>
       </TouchableOpacity>
     )
@@ -132,54 +133,56 @@ const ArticleList = ({ navigation }) => {
         />
       </View>
       {articleLst.length > 0 ?
-        <View style={styles.body}>
-          <View style={{ paddingHorizontal: normalize(20), width: "100%" }}>
-            <View style={styles.mainComp}>
-              <ImageBackground
-                source={{ uri: articleLst[0].url }}
-                style={styles.mainImg}
-              >
-                <Text style={styles.mainHeadline}>{articleLst[0].headline}</Text>
-              </ImageBackground>
-              <Text style={styles.mainSummary}>{articleLst[0].summaryContent}</Text>
-              <View style={styles.mainBtnGr}>
-                <Button
-                  buttonStyle={styles.readBtn}
-                  title={EXPLORE.READ}
-                  onPress={() => navigation.navigate('articleDetail', { ...articleLst[0] })}
-                />
-                <View style={styles.iconBtn}>
-                  <TouchableOpacity onPress={() => reactHandler("love", articleLst[0].id)}>
-                    <Image
-                      source={
-                        reactArticle.love &&
-                          reactArticle.love.includes(articleLst[0].id) ?
-                          require('../../../assets/explore/loveFulfill.png') :
-                          require('../../../assets/explore/love.png')
-                      }
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => reactHandler("bookmark", articleLst[0].id)}>
-                    <Image
-                      source={
-                        reactArticle.bookmark &&
-                          reactArticle.bookmark.includes(articleLst[0].id) ?
-                          require('../../../assets/explore/bookmarkFulfill.png') :
-                          require('../../../assets/explore/bookmark.png')
-                      }
-                    />
-                  </TouchableOpacity>
+        <ScrollView>
+          <View style={styles.body}>
+            <View style={{ paddingHorizontal: normalize(20), width: "100%" }}>
+              <View style={styles.mainComp}>
+                <ImageBackground
+                  source={{ uri: articleLst[0].url }}
+                  style={styles.mainImg}
+                >
+                  <Text style={styles.mainHeadline}>{articleLst[0].headline}</Text>
+                </ImageBackground>
+                <Text style={styles.mainSummary}>{articleLst[0].summaryContent}</Text>
+                <View style={styles.mainBtnGr}>
+                  <Button
+                    buttonStyle={styles.readBtn}
+                    title={EXPLORE.READ}
+                    onPress={() => navigation.navigate('articleDetail', { ...articleLst[0] })}
+                  />
+                  <View style={styles.iconBtn}>
+                    <TouchableOpacity onPress={() => reactHandler("love", articleLst[0].id)}>
+                      <Image
+                        source={
+                          reactArticle.love &&
+                            reactArticle.love.includes(articleLst[0].id) ?
+                            require('../../../assets/explore/loveFulfill.png') :
+                            require('../../../assets/explore/love.png')
+                        }
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => reactHandler("bookmark", articleLst[0].id)}>
+                      <Image
+                        source={
+                          reactArticle.bookmark &&
+                            reactArticle.bookmark.includes(articleLst[0].id) ?
+                            require('../../../assets/explore/bookmarkFulfill.png') :
+                            require('../../../assets/explore/bookmark.png')
+                        }
+                      />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </View>
+            <View style={styles.readmoreContainer}>
+              <Text style={styles.readmoreTxt}>{EXPLORE.READMORE}</Text>
+            </View>
+            <ScrollView horizontal style={{ width: "100%", height: "100%" }}>
+              {remainArticle.map(ele => ele)}
+            </ScrollView>
           </View>
-          <View style={styles.readmoreContainer}>
-            <Text style={styles.readmoreTxt}>{EXPLORE.READMORE}</Text>
-          </View>
-          <ScrollView horizontal style={{ width: "100%", height: "100%" }}>
-            {remainArticle.map(ele => ele)}
-          </ScrollView>
-        </View>
+        </ScrollView>
         : null}
     </View >
   )

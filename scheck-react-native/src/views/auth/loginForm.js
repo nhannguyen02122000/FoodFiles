@@ -4,7 +4,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  KeyboardAvoidingView
+  TouchableOpacity
 } from 'react-native'
 import { Icon, Input, Button } from 'react-native-elements'
 import { LOGINSCREEN } from '../../constants/language'
@@ -14,6 +14,7 @@ import * as authAction from '../../store/reducer/userReducer'
 import FloatingLabelInput from '../../components/floatingLabelInput'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { normalize } from '../../constants/size'
+import auth from '@react-native-firebase/auth'
 
 const LoginForm = (props) => {
   const styles = StyleSheet.create({
@@ -108,30 +109,21 @@ const LoginForm = (props) => {
   const [user, setUser] = useState({ email: '', password: '' })
   const [mess, setMess] = useState('')
   const dispatch = useDispatch()
-  const loginHanlder = async () => {
-    try {
-      const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAr-s6K-0G3do1xDqB0xhiCFghMC2xMsho', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: user.email,
-          password: user.password,
-          returnSecureToken: true
-        })
+  const [isLoading, setIsLoading] = useState(false)
+  const loginHanlder = () => {
+    setIsLoading(true)
+
+    auth().signInWithEmailAndPassword(user.email, user.password)
+      .then((userCredential) => {
+        // Signed in
+        dispatch(authAction.login({ ...userCredential.user, email: user.email }))
       })
-      if (!response.ok) {
-        throw new Error("Something went wrong! Please try again")
-      }
-      const resData = await response.json()
-      dispatch(authAction.login({ ...resData, email: user.email }))
-    }
-    catch (er) {
-      setMess(LOGINSCREEN.ERRORMESS)
-    }
+      .catch((error) => {
+        setMess(LOGINSCREEN.ERRORMESS)
+        setIsLoading(false)
+      });
+
   }
-  console.log(user)
   return (
     <ScrollView style={styles.scrollViewStyle}>
       <View style={{ ...styles.loginFormContainer }}>
@@ -181,10 +173,14 @@ const LoginForm = (props) => {
           titleStyle={styles.letsgoBtnTitle}
           disabled={user.email === '' || user.password === ''}
           onPress={loginHanlder}
+          loading={isLoading}
+          disabled={isLoading}
         />
-        <Text style={styles.forgotPass}>
-          {LOGINSCREEN.FORGOTPASSWORD}
-        </Text>
+        <TouchableOpacity onPress={() => props.setIsForgot(true)}>
+          <Text style={styles.forgotPass}>
+            {LOGINSCREEN.FORGOTPASSWORD}
+          </Text>
+        </TouchableOpacity>
       </View >
     </ScrollView>
   )

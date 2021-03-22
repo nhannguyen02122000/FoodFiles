@@ -33,7 +33,7 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <LinearGradient
-        colors={['#F27E4C', 'rgba(255, 197, 41, 0.8)',]}
+        colors={['rgba(255, 197, 41, 0.8)', '#F27E4C']}
         style={styles.header}
       >
         <Text
