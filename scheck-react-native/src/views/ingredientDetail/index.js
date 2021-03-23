@@ -7,7 +7,8 @@ import {
   ImageBackground,
   Dimensions,
   StyleSheet,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native'
 import { Divider, Button } from 'react-native-elements'
 import { INGDETAIL } from '../../constants/language'
@@ -15,6 +16,7 @@ import { normalize } from '../../constants/size'
 import { color } from '../../constants/color'
 import { ingredientRef } from '../../store/query'
 import { useSelector } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const { width, height } = Dimensions.get('screen')
 const styles = StyleSheet.create({
@@ -72,9 +74,36 @@ const styles = StyleSheet.create({
   },
   foundin: {
     flexDirection: 'row'
+  },
+  iconcontainerBookmark: {
+    width: normalize(50),
+    height: normalize(50),
+    padding: normalize(15),
+    backgroundColor: color.WHITE,
+    borderRadius: 50,
+    position: 'absolute',
+    marginTop: height * 3.7 / 10,
+    marginLeft: width * 2.5 / 3,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.8,
+    elevation: 10,
+    shadowRadius: 15,
+    shadowOffset: { width: 1, height: 1 },
+  },
+  chosenBookmarkContainer: {
+    backgroundColor: color.BOOKMARK
+  },
+  iconBookmark: {
+    width: "100%",
+    height: "100%",
+    tintColor: color.BOOKMARK
+  },
+  chosenLove: {
+    tintColor: color.WHITE
   }
 })
 const IngredientDetail = (props) => {
+  const [additive, setAdditive] = useState([])
   const [ingInfo, setIngInfo] = useState({})
   const ingLst = useSelector(state => state.ingredients.ingredients)
   useEffect(() => {
@@ -97,8 +126,34 @@ const IngredientDetail = (props) => {
       data.url = url
       setIngInfo(data)
     }
+    const getLocalData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('additive')
+        if (value !== null) {
+          setAdditive(JSON.parse(value))
+        }
+      } catch (er) {
+        console.log(er)
+      }
+    }
+    getLocalData()
     getData()
   }, [])
+  const reactHandler = (item) => {
+    setAdditive(cur => {
+      if (cur.filter(ele => ele.id === item.id).length > 0) {
+        let newAr = cur.filter(ele => ele.id !== item.id)
+        console.log(newAr)
+        return newAr
+      }
+      else {
+        return [].concat(cur, [item])
+      }
+    })
+  }
+  useEffect(() => {
+    AsyncStorage.setItem('additive', JSON.stringify(additive))
+  }, [additive])
   let styleToxic = styles.toxicityLevel
 
   if (ingInfo.toxicityLevel) {
@@ -114,6 +169,19 @@ const IngredientDetail = (props) => {
           source={ingInfo.url ? { uri: ingInfo.url } : require('../../../assets/defaultIngDetail.png')}
           style={styles.profileContainer}
         />
+        <TouchableOpacity
+          style={additive &&
+            additive.filter(ele => ele.id === props.route.params.ingId).length > 0 ?
+            { ...styles.iconcontainerBookmark, ...styles.chosenBookmarkContainer } : styles.iconcontainerBookmark}
+          onPress={() => reactHandler({ id: ingInfo.id, name: ingInfo.name })}
+        >
+          <Image
+            source={require('../../../assets/explore/bookmarkFulfill.png')}
+            style={additive &&
+              additive.filter(ele => ele.id === props.route.params.ingId).length > 0 ?
+              { ...styles.iconBookmark, ...styles.chosenLove } : styles.iconBookmark}
+          />
+        </TouchableOpacity>
         <View style={styles.bodyContent}>
           <Text style={styles.ingName}>{ingInfo.name}</Text>
           <Text style={styleToxic}>{ingInfo.toxicityLevel ? ingInfo.toxicityLevel.toUpperCase() : ''}</Text>

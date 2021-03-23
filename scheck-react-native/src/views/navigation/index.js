@@ -128,7 +128,7 @@ const CustomDrawerContent = (props) => {
             <Text style={styles.menuTitle}>Bookmarks</Text>
           </View>
         )}
-        onPress={() => props.navigation.navigate('Bookmark')}
+        onPress={() => props.navigation.navigate('bookmark')}
       />
       <Divider />
       <Text style={styles.collection}>USER</Text>
@@ -142,7 +142,7 @@ const CustomDrawerContent = (props) => {
             <Text style={styles.menuTitle}>Profile</Text>
           </View>
         )}
-        onPress={() => props.navigation.navigate('Bookmark')}
+        onPress={() => props.navigation.navigate('profile')}
       />
       <DrawerItem
         label={() => (

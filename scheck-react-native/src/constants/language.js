@@ -112,3 +112,16 @@ export const FORGOT = {
   SEND: "SEND",
   BACK: "Back to Login"
 }
+export const FAVORITE = {
+  TITLE: "Favorites"
+}
+export const BOOKMARK = {
+  TITLE: "Bookmarks",
+  ADDITIVE: "Additives",
+  ARTICLE: "Articles"
+}
+export const PROFILE = {
+  EDITPROFILE: "EDIT PROFILE",
+  CHANGEPASS: "CHANGE PASSWORD",
+  ERR: "Please login to use this feature"
+}

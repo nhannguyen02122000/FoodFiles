@@ -12,10 +12,11 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useSelector, useDispatch } from 'react-redux'
 import { healthArtRef, dietArcRef, nutriArcRef } from '../../store/query'
-import { FAVORITE } from '../../constants/language'
+import { BOOKMARK } from '../../constants/language'
 import storage from '@react-native-firebase/storage'
 
 const Favorite = ({ navigation }) => {
+  const [additives, setAdditives] = useState([])
   const [articleLst, setArtcleLst] = useState([])
   const [reactArticle, setReactArticle] = useState()
   const [loveLst, setLoveLst] = useState([])
@@ -26,7 +27,10 @@ const Favorite = ({ navigation }) => {
         if (value !== null) {
           setReactArticle(JSON.parse(value))
         }
-
+        const value1 = await AsyncStorage.getItem('additive')
+        if (value1 !== null) {
+          setAdditives(JSON.parse(value1))
+        }
         const promises = []
         promises.push(healthArtRef.get().then(docLst => {
           const data = []
@@ -75,10 +79,31 @@ const Favorite = ({ navigation }) => {
   console.log(loveLst.length, "ho")
   console.log(articleLst.length, "hi")
   console.log(reactArticle, "hello")
+  console.log(additives.length, "hihihi")
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
-        <Text style={styles.title}>{FAVORITE.TITLE}</Text>
+        <Text style={styles.title}>{BOOKMARK.TITLE}</Text>
+      </View>
+      <View style={styles.subjectContainer}>
+        <Text style={styles.subject}>{BOOKMARK.ADDITIVE}</Text>
+      </View>
+      <ScrollView style={{ width: "100%" }}>
+        {additives.map((ele, ind) =>
+          <TouchableOpacity
+            key={ind}
+            style={{ width: "100%", paddingLeft: normalize(20) }}
+            onPress={() => navigation.navigate('ingredientDetail', {
+              ingName: ele.name,
+              ingId: ele.id
+            })}
+          >
+            <Text style={styles.headline}>{ele.name}</Text>
+          </TouchableOpacity>
+        )}
+      </ScrollView>
+      <View style={styles.subjectContainer}>
+        <Text style={styles.subject}>{BOOKMARK.ARTICLE}</Text>
       </View>
       <ScrollView >
         <View style={{ width: "100%", alignItems: 'center' }}>
@@ -169,5 +194,18 @@ const styles = StyleSheet.create({
     width: normalize(75),
     height: normalize(75),
     borderRadius: 20,
+  },
+  subject: {
+    fontWeight: '400',
+    fontFamily: "OpenSans",
+    fontSize: normalize(20),
+    textAlign: 'left',
+    paddingLeft: normalize(20),
+    color: color.BLACK
+  },
+  subjectContainer: {
+    width: "100%",
+    alignItems: 'flex-start',
+    marginTop: normalize(20)
   }
 })

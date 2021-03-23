@@ -15,6 +15,7 @@ import FloatingLabelInput from '../../components/floatingLabelInput'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { normalize } from '../../constants/size'
 import auth from '@react-native-firebase/auth'
+import { userRef } from '../../store/query'
 
 const LoginForm = (props) => {
   const styles = StyleSheet.create({
@@ -117,6 +118,9 @@ const LoginForm = (props) => {
       .then((userCredential) => {
         // Signed in
         dispatch(authAction.login({ ...userCredential.user, email: user.email }))
+        userRef.doc(userCredential.uid).get().then(res => {
+          dispatch(authAction.setUser(res))
+        })
       })
       .catch((error) => {
         setMess(LOGINSCREEN.ERRORMESS)

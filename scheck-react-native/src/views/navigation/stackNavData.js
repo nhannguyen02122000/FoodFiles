@@ -11,6 +11,8 @@ import ArticleDetail from '../explore/articleDetail'
 import Search from '../search/index'
 import ForgotForm from '../auth/forgotForm'
 import Favorite from '../favorites/index'
+import Bookmark from '../bookmark/index'
+import Profile from '../profile/index'
 
 const headerLeftComponent = (props) => {
   return (
@@ -26,6 +28,26 @@ const headerLeftComponent = (props) => {
         resizeMode="contain"
         style={{
           height: 20,
+        }}
+      />
+    </TouchableOpacity>
+  )
+}
+const headerLeftComponent1 = (props) => {
+  return (
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={{
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+      }}
+    >
+      <Image
+        source={require('../../../assets/arrow_back.png')}
+        resizeMode="contain"
+        style={{
+          height: 20,
+          tintColor: 'white'
         }}
       />
     </TouchableOpacity>
@@ -61,6 +83,16 @@ const StackNavigationData = [
     headerLeft: headerLeftComponent,
     name: 'favorite',
     component: Favorite
+  },
+  {
+    headerLeft: headerLeftComponent,
+    name: 'bookmark',
+    component: Bookmark
+  },
+  {
+    headerLeft: headerLeftComponent1,
+    name: 'profile',
+    component: Profile
   }
 ]
 
