@@ -85,7 +85,7 @@ const Profile = (props) => {
           />
           <View style={{ marginBottom: normalize(10), marginTop: -20 }}>
             <Text
-              style={{ ...styles.labelStyle, paddingLeft: normalize(7) }}
+              style={{ ...styles.labelStyle, paddingLeft: 11 }}
             >
               {PROFILE.GENDER}
             </Text>
@@ -136,7 +136,7 @@ const Profile = (props) => {
           />
           <View style={{ marginBottom: normalize(10), marginTop: -20 }}>
             <Text
-              style={{ ...styles.labelStyle, paddingLeft: normalize(7) }}
+              style={{ ...styles.labelStyle, paddingLeft: 11 }}
             >
               {PROFILE.GOAL}
             </Text>
@@ -152,6 +152,7 @@ const Profile = (props) => {
               <Picker.Item label={PROFILE.MAINTAINWEIGHT} value={PROFILE.MAINTAINWEIGHT} />
             </Picker>
             <Button
+              titleStyle={{ fontSize: normalize(14) }}
               title={PROFILE.SAVE}
               type="solid"
               buttonStyle={styles.btnSave}
@@ -162,6 +163,7 @@ const Profile = (props) => {
           </View>
         </View>
         <Button
+          titleStyle={{ fontSize: normalize(14) }}
           buttonStyle={styles.passBtn}
           title={PROFILE.CHANGEPASSBTN}
           onPress={async () => {

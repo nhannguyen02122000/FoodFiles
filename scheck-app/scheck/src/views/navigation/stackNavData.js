@@ -2,7 +2,6 @@ import React from 'react';
 import {
   TouchableOpacity,
   Image,
-  StyleSheet
 } from 'react-native';
 
 import TabNavigation from './tabNavigation';
@@ -13,7 +12,6 @@ import ForgotForm from '../auth/forgotForm'
 import Favorite from '../favorites/index'
 import Bookmark from '../bookmark/index'
 import Profile from '../profile/index'
-import { normalize } from '../../constants/size'
 
 const headerLeftComponent = (props) => {
   return (
@@ -21,9 +19,8 @@ const headerLeftComponent = (props) => {
       onPress={props.onPress}
       style={{
         //paddingHorizontal: normalize(10),
-        marginLeft: normalize(10),
+        //marginLeft: normalize(10),
         paddingVertical: 12,
-        backgroundColor: 'green',
         alignItems: 'flex-start'
       }}
     >
@@ -32,8 +29,6 @@ const headerLeftComponent = (props) => {
         resizeMode="contain"
         style={{
           height: 20,
-          backgroundColor: 'blue',
-
         }}
       />
     </TouchableOpacity>
@@ -44,7 +39,7 @@ const headerLeftComponent1 = (props) => {
     <TouchableOpacity
       onPress={props.onPress}
       style={{
-        paddingHorizontal: 16,
+        // paddingHorizontal: 16,
         paddingVertical: 12,
       }}
     >

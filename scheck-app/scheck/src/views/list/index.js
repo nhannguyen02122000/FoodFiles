@@ -2,18 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   ScrollView
 } from 'react-native'
 import { color } from '../../constants/color'
-import {
-  Icon,
-  Input,
-} from 'react-native-elements'
-import LinearGradient from 'react-native-linear-gradient';
 import { ingredientRef } from '../../store/query'
-import { FlatList } from 'react-native';
 import { normalize } from '../../constants/size'
 import * as ingAction from '../../store/reducer/ingredientReducer'
 import { useSelector, useDispatch } from 'react-redux'

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ScrollView
 } from 'react-native'
-import { Icon, Input, Button } from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import { USERDETAILAUTHSCREEN } from '../../constants/language'
 import { color } from '../../constants/color'
 import { useDispatch } from 'react-redux'

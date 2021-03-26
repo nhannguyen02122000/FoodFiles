@@ -8,8 +8,6 @@ import {
   Image
 } from "react-native"
 import {
-  Icon,
-  Input,
   Button
 } from 'react-native-elements'
 import { useSelector } from 'react-redux'
@@ -149,6 +147,6 @@ const styles = StyleSheet.create({
     fontSize: normalize(12),
     fontWeight: 'bold',
     fontStyle: 'italic',
-    marginLeft: normalize(29)
+    marginLeft: 35
   }
 })

@@ -90,7 +90,11 @@ export const INGDETAIL = {
   ADI: "Acceptable daily intake",
   ROLE: "Role",
   FOUNDIN: "Usually found in",
-  DES: "Description"
+  DES: "Description",
+  ADDFAVORITE: "Added to your Favorites",
+  REMOVEFAVORITE: "Removed from your Favorites",
+  ADDBOOKMARK: "Added to your Bookmarks",
+  REMOVEBOOKMARK: "Removed to your Bookmarks"
 }
 export const SEARCH = {
   SEARCHPLACEHOLDER: "Search additives or E numbers"
@@ -103,7 +107,11 @@ export const EXPLORE = {
   READ: "READ"
 }
 export const ARCDETAIL = {
-  SRC: "Source"
+  SRC: "Source",
+  ADDFAVORITE: "Added to your Favorites",
+  REMOVEFAVORITE: "Removed from your Favorites",
+  ADDBOOKMARK: "Added to your Bookmarks",
+  REMOVEBOOKMARK: "Removed to your Bookmarks"
 }
 export const FORGOT = {
   TITLE: "Forgot Your Password?",
@@ -145,5 +153,5 @@ export const PROFILE = {
   GAINWEIGHT: "Gain weight",
   LOSEWEIGHT: "Lose weight",
   SAVE: "SAVE",
-  CHANGEPASSBTN: "Send me an email to change password"
+  CHANGEPASSBTN: "CHANGE PASSWORD VIA EMAIL"
 }

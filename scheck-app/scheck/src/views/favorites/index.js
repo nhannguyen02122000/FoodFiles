@@ -7,14 +7,15 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Dimensions,
   TouchableOpacity
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useSelector, useDispatch } from 'react-redux'
 import { healthArtRef, dietArcRef, nutriArcRef } from '../../store/query'
 import { FAVORITE } from '../../constants/language'
 import storage from '@react-native-firebase/storage'
 
+const { width, height } = Dimensions.get('screen')
 const Favorite = ({ navigation }) => {
   const [articleLst, setArtcleLst] = useState([])
   const [reactArticle, setReactArticle] = useState()
@@ -76,12 +77,12 @@ const Favorite = ({ navigation }) => {
       <View style={styles.header}>
         <Text style={styles.title}>{FAVORITE.TITLE}</Text>
       </View>
-      <ScrollView >
-        <View style={{ width: "100%", alignItems: 'center' }}>
+      <ScrollView style={{ height: "100%" }} >
+        <View style={{ width: "100%", alignItems: 'center', height: height }}>
           {loveLst.map((ele, ind) =>
             <TouchableOpacity
               key={ind}
-              style={{ width: "100%" }}
+              style={{ width: "100%", }}
               onPress={() => navigation.navigate('articleDetail', { ...ele })}
             >
               <View style={styles.article}>
@@ -117,7 +118,8 @@ const styles = StyleSheet.create({
     color: color.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 5
+    marginTop: 5,
+    height: 50
   },
   title: {
     fontFamily: "OpenSans",
@@ -132,10 +134,10 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
 
-    elevation: 3,
+    elevation: 1,
     borderRadius: 10,
     marginVertical: normalize(15),
 

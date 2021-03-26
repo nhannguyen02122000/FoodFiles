@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { color } from '../../constants/color'
 import { REGISTERSCREEN } from '../../constants/language'
-import { Icon, Input, Button } from 'react-native-elements'
+import { Icon, Button } from 'react-native-elements'
 import { useDispatch } from 'react-redux'
 import * as authAction from '../../store/reducer/userReducer'
 import { normalize } from '../../constants/size'

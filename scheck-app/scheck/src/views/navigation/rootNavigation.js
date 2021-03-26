@@ -1,13 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import { createStackNavigator, Header } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import AuthScreen from '../auth/index'
 import stackNavData from './stackNavData';
-import { normalize } from '../../constants/size'
 import { color } from '../../constants/color'
-import TabNavigation from './tabNavigation'
-import tabNavigation from './tabNavigation';
 
 const Stack = createStackNavigator();
 const styles = StyleSheet.create({

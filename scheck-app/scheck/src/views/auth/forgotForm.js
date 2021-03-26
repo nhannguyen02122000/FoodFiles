@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { FORGOT } from '../../constants/language'
-import { size } from '../../constants/size'
 import { color } from '../../constants/color'
 import {
   View,

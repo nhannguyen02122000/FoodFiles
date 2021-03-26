@@ -7,14 +7,15 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Dimensions,
   TouchableOpacity
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useSelector, useDispatch } from 'react-redux'
 import { healthArtRef, dietArcRef, nutriArcRef } from '../../store/query'
 import { BOOKMARK } from '../../constants/language'
 import storage from '@react-native-firebase/storage'
 
+const { width, height } = Dimensions.get('screen')
 const Favorite = ({ navigation }) => {
   const [additives, setAdditives] = useState([])
   const [articleLst, setArtcleLst] = useState([])
@@ -83,7 +84,7 @@ const Favorite = ({ navigation }) => {
       <View style={styles.subjectContainer}>
         <Text style={styles.subject}>{BOOKMARK.ADDITIVE}</Text>
       </View>
-      <ScrollView style={{ width: "100%" }}>
+      <ScrollView style={{ width: "100%", height: height * 1 / 3 }}>
         {additives.map((ele, ind) =>
           <TouchableOpacity
             key={ind}
@@ -101,7 +102,7 @@ const Favorite = ({ navigation }) => {
         <Text style={styles.subject}>{BOOKMARK.ARTICLE}</Text>
       </View>
       <ScrollView >
-        <View style={{ width: "100%", alignItems: 'center' }}>
+        <View style={{ width: "100%", alignItems: 'center', height: height * 2 / 3 }}>
           {bookmarkLst.map((ele, ind) =>
             <TouchableOpacity
               key={ind}
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: color.B
   },
   header: {
     color: color.WHITE,
@@ -155,10 +156,10 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
 
-    elevation: 3,
+    elevation: 1,
     borderRadius: 10,
     marginVertical: normalize(15),
 

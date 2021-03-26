@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   View,
-  Dimensions,
   StyleSheet,
-  KeyboardAvoidingView,
   Image,
-  Platform,
-  ScrollView,
-  Keyboard,
-  TouchableWithoutFeedback,
-  TextInput
 } from 'react-native'
 
 import { color } from '../../constants/color'
@@ -37,18 +30,13 @@ const Auth = () => {
       position: 'absolute',
       height: normalize(200),
       width: isLogin ? normalize(305) : normalize(280),
-      top: normalize(120),
+      borderColor: 'black',
+      borderWidth: 0.15,
+      top: normalize(120,),
       backgroundColor: "#fff",
-      borderRadius: 8,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 4,
-        height: 5,
-      },
-      shadowOpacity: 0.14,
-      shadowRadius: 4.65,
+      borderRadius: 6,
+
       zIndex: 0,
-      elevation: 1,
     },
     tinyLogo: {
       width: normalize(64),

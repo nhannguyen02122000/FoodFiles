@@ -9,8 +9,6 @@ import {
 } from 'react-native'
 import {
   Button,
-  Icon,
-
 } from 'react-native-elements'
 import { EXPLORE } from '../../constants/language'
 import { color } from '../../constants/color'
@@ -73,6 +71,26 @@ const ArticleList = ({ navigation }) => {
   useEffect(() => {
     AsyncStorage.setItem('article', JSON.stringify(reactArticle))
   }, [reactArticle])
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // The screen is focused
+      // Call any action
+      const getLocalData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('article')
+          if (value !== null) {
+            setReactArticle(JSON.parse(value))
+          }
+        } catch (er) {
+          console.log(er)
+        }
+      }
+      getLocalData()
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation])
   const reactHandler = (type, id) => {
     setReactArticle(cur => {
       if (reactArticle[type].includes(id)) {
@@ -146,6 +164,7 @@ const ArticleList = ({ navigation }) => {
                   <Button
                     buttonStyle={styles.readBtn}
                     title={EXPLORE.READ}
+                    titleStyle={{ fontSize: 12 }}
                     onPress={() => navigation.navigate('articleDetail', { ...articleLst[0] })}
                   />
                   <View style={styles.iconBtn}>
@@ -199,9 +218,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: color.WHITE,
-    paddingTop: normalize(40),
-    paddingHorizontal: normalize(15),
-    paddingBottom: normalize(10),
+    paddingTop: 50,
+    paddingHorizontal: 15,
+    paddingBottom: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -221,7 +240,8 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Quicksand",
     color: 'rgba(0, 0, 0, 0.38)',
-    textAlign: 'left'
+    textAlign: 'left',
+    fontSize: normalize(12)
   },
   chosenBtn: {
     backgroundColor: color.PRIMARY,
@@ -283,7 +303,6 @@ const styles = StyleSheet.create({
   },
   iconBtn: {
     flexDirection: 'row',
-    width: normalize(40),
     justifyContent: 'space-between'
   },
   readmoreContainer: {

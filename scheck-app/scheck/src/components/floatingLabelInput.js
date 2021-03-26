@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput } from 'react-native'
-import { color } from '../constants/color'
 import { Input } from 'react-native-elements'
 
 const FloatingLabelInput = (props) => {

@@ -17,12 +17,13 @@ import { color } from '../../constants/color'
 import { ingredientRef } from '../../store/query'
 import { useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Snackbar } from 'react-native-paper'
 
 const { width, height } = Dimensions.get('screen')
 const styles = StyleSheet.create({
   profileContainer: {
     width: width,
-    height: normalize(240)
+    height: height / 3
   },
   ingName: {
     fontFamily: "OpenSans",
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.WHITE,
     borderRadius: 50,
     position: 'absolute',
-    marginTop: height * 3.7 / 10,
+    marginTop: height * 2.9 / 10,
     marginLeft: width * 2.5 / 3,
     shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOpacity: 0.8,
@@ -103,6 +104,8 @@ const styles = StyleSheet.create({
   }
 })
 const IngredientDetail = (props) => {
+  const [visible, setVisible] = useState(false)
+  const [mess, setMess] = useState('')
   const [additive, setAdditive] = useState([])
   const [ingInfo, setIngInfo] = useState({})
   const ingLst = useSelector(state => state.ingredients.ingredients)
@@ -170,7 +173,7 @@ const IngredientDetail = (props) => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{ width: "100%", height: "100%", backgroundColor: color.WHITE }}>
       <View>
         <ImageBackground
           //source={require('../../../assets/defaultIngDetail.png')}
@@ -181,7 +184,12 @@ const IngredientDetail = (props) => {
           style={additive &&
             additive.filter(ele => ele.id === props.route.params.ingId).length > 0 ?
             { ...styles.iconcontainerBookmark, ...styles.chosenBookmarkContainer } : styles.iconcontainerBookmark}
-          onPress={() => reactHandler({ id: ingInfo.id, name: ingInfo.name })}
+          onPress={() => {
+            reactHandler({ id: ingInfo.id, name: ingInfo.name })
+            setMess(additive.filter(ele => ele.id === props.route.params.ingId).length > 0 ?
+              INGDETAIL.REMOVEFAVORITE : INGDETAIL.ADDBOOKMARK)
+            setVisible(true)
+          }}
         >
           <Image
             source={require('../../../assets/explore/bookmarkFulfill.png')}
@@ -229,6 +237,24 @@ const IngredientDetail = (props) => {
             <Text style={styles.detail}>{ingInfo.description}</Text>
           </View>
         </View>
+        <Snackbar
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          style={{
+            backgroundColor: 'white',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 5,
+            },
+            shadowOpacity: 0.36,
+            shadowRadius: 6.68,
+
+            elevation: 11,
+          }}
+        >
+          <Text style={{ color: 'black' }}>{mess}</Text>
+        </Snackbar>
       </View>
     </ScrollView>
   )

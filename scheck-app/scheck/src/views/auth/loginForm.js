@@ -6,13 +6,12 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native'
-import { Icon, Input, Button } from 'react-native-elements'
+import { Icon, Button } from 'react-native-elements'
 import { LOGINSCREEN } from '../../constants/language'
 import { color } from '../../constants/color'
 import { useDispatch } from 'react-redux'
 import * as authAction from '../../store/reducer/userReducer'
 import FloatingLabelInput from '../../components/floatingLabelInput'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { normalize } from '../../constants/size'
 import auth from '@react-native-firebase/auth'
 import { userRef } from '../../store/query'

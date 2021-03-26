@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Dimensions,
   Image
 } from 'react-native'
 import { color } from '../../constants/color'
@@ -20,6 +21,7 @@ import { normalize } from '../../constants/size'
 import FloatingLabelInput from '../../components/floatingLabelInput'
 import { Picker } from '@react-native-picker/picker'
 
+const { width, height } = Dimensions.get('screen')
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
   },
   calcText: {
     color: color.PRIMARY,
-    fontSize: normalize(22),
+    fontSize: normalize(20),
     fontFamily: "QuickSand",
     textAlign: 'center'
   },
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: color.WHITE,
     fontFamily: 'Quicksand',
-    fontSize: normalize(35),
+    fontSize: normalize(30),
     fontWeight: 'bold'
   },
   btnContainer: {
@@ -65,9 +67,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: "100%",
-    height: 200,
-    paddingHorizontal: normalize(50),
-    maxHeight: normalize(120),
+    height: height / 5,
+    paddingHorizontal: normalize(30),
   },
   btnOpa: {
     backgroundColor: color.WHITE,
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     borderRadius: 10,
-    width: normalize(130),
+    width: normalize(150),
     backgroundColor: color.WHITE,
     justifyContent: 'flex-start'
   },
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   },
   calcBtn: {
     borderRadius: 10,
-    width: normalize(130),
+    width: normalize(150),
     backgroundColor: color.PRIMARY,
     justifyContent: 'flex-start',
     height: "100%",
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   },
   btnTitle: {
     color: color.PRIMARY,
-    fontFamily: normalize(14),
+    fontSize: normalize(14),
     fontFamily: "Quicksand",
     paddingLeft: normalize(10),
   }
@@ -175,6 +176,7 @@ const Tracking = (props) => {
     else {
       setCalories(10 * info.weight + 6.25 * info.height - 5 * info.age - 161)
     }
+    setModal(false)
   }
   return (
     <View style={styles.screen} >
@@ -192,7 +194,7 @@ const Tracking = (props) => {
         </LinearGradient >
         {/* </View> */}
         <View style={styles.btnContainer}>
-          <View style={{ height: 300, maxHeight: "100%", flexDirection: 'column', justifyContent: 'space-between' }}>
+          <View style={{ height: height / 5, flexDirection: 'column', justifyContent: 'space-between' }}>
             <TouchableOpacity style={styles.btnOpa} >
               <Button
                 icon={
@@ -268,9 +270,14 @@ const Tracking = (props) => {
                 <Picker.Item label={TRACKING.FEMALE} value={TRACKING.FEMALE} />
                 <Picker.Item label={TRACKING.OTHER} value={TRACKING.OTHER} />
               </Picker>
+              <Button
+                title={TRACKING.CALC}
+                buttonStyle={{ backgroundColor: color.PRIMARY }}
+                onPress={calcHandler}
+              />
             </Overlay>
           </View>
-          <View style={{ height: 300, maxHeight: "100%" }}>
+          <View style={{ height: height / 5 }}>
             <TouchableOpacity style={styles.btnCalcOpa} >
               <Button
                 icon={

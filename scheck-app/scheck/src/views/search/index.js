@@ -6,7 +6,6 @@ import {
 } from 'react-native'
 import {
   Input,
-  Button
 } from 'react-native-elements'
 import React, { useState, useEffect, useRef } from 'react'
 import { color } from '../../constants/color'
@@ -51,7 +50,7 @@ const Search = ({ navigation }) => {
     setFilteredData(itemLst.filter(item => item.name.toUpperCase().includes(value.toUpperCase())))
   }
   const chosenHandler = (item) => {
-    if (!prevSearch.includes(item)) {
+    if (prevSearch.filter(cur => cur.id === item.id).length === 0) {
       AsyncStorage.setItem('searchedValue', JSON.stringify([item, ...prevSearch,]))
       setPrevSearch([item, ...prevSearch,])
     }
@@ -70,6 +69,7 @@ const Search = ({ navigation }) => {
           value={curSearch}
           onChangeText={value => searchHandler(value)}
           autoFocus
+          style={{ fontSize: normalize(14) }}
         />
       </View>
       {curSearch !== '' ?
@@ -84,11 +84,12 @@ const Search = ({ navigation }) => {
             </Text>
           )}
         </View> :
-        <View>
+        <View style={{ backgroundColor: color.WHITE, marginTop: 10 }}>
           {prevSearch.map((item, ind) =>
             <View key={ind} style={styles.prevLst}>
               <Image
                 source={require('../../../assets/search/oldSearch.png')}
+                style={{ width: 30, height: 30 }}
               />
               <Text
                 style={styles.prevText}
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     elevation: 4,
     shadowRadius: 15,
     shadowOffset: { width: 1, height: 1 },
-    height: normalize(35),
+    height: 60,
     backgroundColor: color.WHITE,
     justifyContent: 'flex-start'
   },
@@ -142,7 +143,8 @@ const styles = StyleSheet.create({
     marginLeft: normalize(20),
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'yellow'
+    backgroundColor: color.WHITE,
+    marginVertical: 5
   },
   prevText: {
     marginLeft: normalize(15),

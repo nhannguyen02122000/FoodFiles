@@ -9,16 +9,16 @@ import {
   ImageBackground,
   TouchableOpacity
 } from 'react-native'
-import {
-  Button
-} from 'react-native-elements'
 import { color } from '../../constants/color'
 import { ARCDETAIL } from '../../constants/language'
 import { normalize } from '../../constants/size'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Snackbar } from 'react-native-paper'
 
 const { width, height } = Dimensions.get('screen')
 const ArticleDetail = ({ route }) => {
+  const [visible, setVisible] = useState(false)
+  const [mess, setMess] = useState('')
   const articleInfo = route.params
   const [reactArticle, setReactArticle] = useState({ love: [], bookmark: [] })
   useEffect(() => {
@@ -69,7 +69,11 @@ const ArticleDetail = ({ route }) => {
         style={reactArticle.love &&
           reactArticle.love.includes(articleInfo.id) ?
           { ...styles.iconcontainer, ...styles.chosenLoveContainer } : styles.iconcontainer}
-        onPress={() => reactHandler("love", articleInfo.id)}
+        onPress={() => {
+          reactHandler("love", articleInfo.id)
+          setMess(reactArticle.love.includes(articleInfo.id) ? ARCDETAIL.REMOVEFAVORITE : ARCDETAIL.ADDFAVORITE)
+          setVisible(true)
+        }}
       >
         <Image
           source={require('../../../assets/explore/loveFulfill.png')}
@@ -82,7 +86,11 @@ const ArticleDetail = ({ route }) => {
         style={reactArticle.bookmark &&
           reactArticle.bookmark.includes(articleInfo.id) ?
           { ...styles.iconcontainerBookmark, ...styles.chosenBookmarkContainer } : styles.iconcontainerBookmark}
-        onPress={() => reactHandler("bookmark", articleInfo.id)}
+        onPress={() => {
+          reactHandler("bookmark", articleInfo.id)
+          setMess(reactArticle.bookmark.includes(articleInfo.id) ? ARCDETAIL.REMOVEBOOKMARK : ARCDETAIL.ADDBOOKMARK)
+          setVisible(true)
+        }}
       >
         <Image
           source={require('../../../assets/explore/bookmarkFulfill.png')}
@@ -108,6 +116,24 @@ const ArticleDetail = ({ route }) => {
           {articleInfo.content}
         </Text>
       </ScrollView>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        style={{
+          backgroundColor: 'white',
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 5,
+          },
+          shadowOpacity: 0.36,
+          shadowRadius: 6.68,
+
+          elevation: 11,
+        }}
+      >
+        <Text style={{ color: 'black' }}>{mess}</Text>
+      </Snackbar>
     </View>
   )
 }
