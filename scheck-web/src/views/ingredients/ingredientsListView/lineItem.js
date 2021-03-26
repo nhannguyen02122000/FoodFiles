@@ -35,7 +35,8 @@ const LineItem = ({ ingredient, index, ...rest }) => {
     for (let ele of ingredient.foundIn) {
       foundIn += ele + ", "
     }
-    foundIn = foundIn.substr(0, foundIn.length - 2)
+    if (ingredient.foundIn.length)
+      foundIn = foundIn.substr(0, foundIn.length - 2)
   }
   foundIn += "]"
   return (

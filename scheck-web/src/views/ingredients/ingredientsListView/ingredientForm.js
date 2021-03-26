@@ -38,7 +38,7 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
     toxicityLevel: curIngredient ? curIngredient.toxicityLevel : '',
     ADI: curIngredient ? curIngredient.ADI : '',
     foundIn: curIngredient ? curIngredient.foundIn : [],
-    eNumber: ''
+    eNumber: '',
   })
   const [image, setImage] = useState({ image: '', file: null })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -87,7 +87,8 @@ const AddIngredientForm = ({ open, setOpenForm, curIngredient, ...rest }) => {
       storageRef = firebase.storage().ref().child(`images/${insId}.jpg`)
       await storageRef.put(image.file)
     }
-    ingredientRef.doc(insId).set({ ...ingredient, imageUrl: storageRef.fullPath, id: insId, order: order })
+    let imgUrl = storageRef.fullPath || ''
+    ingredientRef.doc(insId).set({ ...ingredient, imageUrl: imgUrl, id: insId, order: order })
       .then()
       .catch(err => enqueueSnackbar(err, { variant: "warning" }))
       .finally(() => {
