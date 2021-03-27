@@ -167,9 +167,9 @@ const IngredientDetail = (props) => {
   const icon = {
     Snacks: require('../../../assets/ingredient/snack.png'),
     "Soft drinks": require('../../../assets/ingredient/softdrink.png'),
-    "Fruit juice": require('../../../assets/ingredient/juice.png'),
-    Milk: require('../../../assets/ingredient/milk.png'),
-    "Canned food": require('../../../assets/ingredient/canfood.png'),
+    "Fruit juices": require('../../../assets/ingredient/juice.png'),
+    Milks: require('../../../assets/ingredient/milk.png'),
+    "Canned foods": require('../../../assets/ingredient/canfood.png'),
   }
 
   return (
@@ -187,7 +187,7 @@ const IngredientDetail = (props) => {
           onPress={() => {
             reactHandler({ id: ingInfo.id, name: ingInfo.name })
             setMess(additive.filter(ele => ele.id === props.route.params.ingId).length > 0 ?
-              INGDETAIL.REMOVEFAVORITE : INGDETAIL.ADDBOOKMARK)
+              INGDETAIL.REMOVEBOOKMARK : INGDETAIL.ADDBOOKMARK)
             setVisible(true)
           }}
         >

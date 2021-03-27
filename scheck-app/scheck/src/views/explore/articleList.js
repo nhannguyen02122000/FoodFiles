@@ -17,12 +17,14 @@ import { nutriArcRef, healthArtRef, dietArcRef } from '../../store/query'
 import storage from '@react-native-firebase/storage'
 import { ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Snackbar } from 'react-native-paper'
 
 const ArticleList = ({ navigation }) => {
+  const [visible, setVisible] = useState(false)
+  const [mess, setMess] = useState('')
   const [selectedArticleType, setSelectedArticleType] = useState(0)
   const [articleLst, setArticleLst] = useState([])
   const [reactArticle, setReactArticle] = useState({ love: [], bookmark: [] })
-
 
   useEffect(() => {
     const getData = async () => {
@@ -95,12 +97,16 @@ const ArticleList = ({ navigation }) => {
     setReactArticle(cur => {
       if (reactArticle[type].includes(id)) {
         let newAr = cur[type].filter(item => item != id)
+        setMess(type === 'love' ? EXPLORE.REMOVEFAVORITE : EXPLORE.REMOVEBOOKMARK)
+        setVisible(true)
         return {
           ...cur,
           [type]: newAr
         }
       }
       else {
+        setMess(type === 'love' ? EXPLORE.ADDFAVORITE : EXPLORE.ADDBOOKMARK)
+        setVisible(true)
         return {
           ...cur,
           [type]: [].concat(cur[type], [id])
@@ -167,6 +173,7 @@ const ArticleList = ({ navigation }) => {
                     titleStyle={{ fontSize: 12 }}
                     onPress={() => navigation.navigate('articleDetail', { ...articleLst[0] })}
                   />
+
                   <View style={styles.iconBtn}>
                     <TouchableOpacity onPress={() => reactHandler("love", articleLst[0].id)}>
                       <Image
@@ -200,6 +207,24 @@ const ArticleList = ({ navigation }) => {
             <ScrollView horizontal style={{ width: "100%", height: "100%" }}>
               {remainArticle.map(ele => ele)}
             </ScrollView>
+            <Snackbar
+              visible={visible}
+              onDismiss={() => setVisible(false)}
+              style={{
+                backgroundColor: 'white',
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 5,
+                },
+                shadowOpacity: 0.36,
+                shadowRadius: 6.68,
+
+                elevation: 11,
+              }}
+            >
+              <Text style={{ color: 'black' }}>{mess}</Text>
+            </Snackbar>
           </View>
         </ScrollView>
         : null}

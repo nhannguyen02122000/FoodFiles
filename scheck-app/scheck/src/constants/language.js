@@ -104,7 +104,11 @@ export const EXPLORE = {
   NUTRITION: "NUTRITION",
   DIET: "DIET",
   READMORE: "Read more:",
-  READ: "READ"
+  READ: "READ",
+  ADDFAVORITE: "Added to your Favorites",
+  REMOVEFAVORITE: "Removed from your Favorites",
+  ADDBOOKMARK: "Added to your Bookmarks",
+  REMOVEBOOKMARK: "Removed to your Bookmarks"
 }
 export const ARCDETAIL = {
   SRC: "Source",
