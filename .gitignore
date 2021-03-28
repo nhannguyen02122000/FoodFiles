@@ -13,8 +13,7 @@ yarn.lock
 *.key
 *.mobileprovision
 .expo-shared/
-android/
-ios/
+
 
 # testing
 /coverage

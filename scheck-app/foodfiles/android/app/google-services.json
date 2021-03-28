@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "505370390147",
+    "project_id": "scheck-da2c3",
+    "storage_bucket": "scheck-da2c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505370390147:android:064133c3f6819c4d77b5b6",
+        "android_client_info": {
+          "package_name": "com.foodfiles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505370390147-ls02tvsairbb65gkc1b43icn09oc0lb3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd3LOlXJfhyM_oDHjcouQA5acEYAvItAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505370390147-ls02tvsairbb65gkc1b43icn09oc0lb3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505370390147:android:94f47e9590d625b277b5b6",
+        "android_client_info": {
+          "package_name": "com.scheck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505370390147-ls02tvsairbb65gkc1b43icn09oc0lb3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd3LOlXJfhyM_oDHjcouQA5acEYAvItAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505370390147-ls02tvsairbb65gkc1b43icn09oc0lb3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
