@@ -204,9 +204,6 @@ const ArticleList = ({ navigation }) => {
             <View style={styles.readmoreContainer}>
               <Text style={styles.readmoreTxt}>{EXPLORE.READMORE}</Text>
             </View>
-            <ScrollView horizontal style={{ width: "100%", height: "100%" }}>
-              {remainArticle.map(ele => ele)}
-            </ScrollView>
             <Snackbar
               visible={visible}
               onDismiss={() => setVisible(false)}
@@ -221,10 +218,15 @@ const ArticleList = ({ navigation }) => {
                 shadowRadius: 6.68,
 
                 elevation: 11,
+                marginBottom: 50
               }}
             >
               <Text style={{ color: 'black' }}>{mess}</Text>
             </Snackbar>
+            <ScrollView horizontal style={{ width: "100%", height: "100%" }}>
+              {remainArticle.map(ele => ele)}
+            </ScrollView>
+
           </View>
         </ScrollView>
         : null}
